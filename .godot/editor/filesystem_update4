@@ -1,0 +1,6 @@
+res://scene/2/spielkarte.tscn
+res://scene/0/kasino.tscn
+res://scene/0/spieltisch.tscn
+res://scene/1/spieler.tscn
+res://scene/1/croupier.tscn
+res://scene/2/spielkarte.gd

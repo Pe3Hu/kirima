@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy8h0ecqcsyln"]
+
+[ext_resource type="Script" path="res://scene/2/spielkarte.gd" id="1_r6ldh"]
+[ext_resource type="FontFile" uid="uid://b1ljoth5axgt3" path="res://asset/font/ALBA____.TTF" id="3_c6aty"]
+
+[node name="Spielkarte" type="MarginContainer"]
+custom_minimum_size = Vector2(60, 90)
+layout_direction = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -51.0
+offset_right = 30.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r6ldh")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.65098, 0.65098, 0.65098, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+centered = false
+flip_h = true
+
+[node name="Label" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Kind" type="Label" parent="Label"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_c6aty")
+theme_override_font_sizes/font_size = 30
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rank" type="Label" parent="Label"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_c6aty")
+theme_override_font_sizes/font_size = 30
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
