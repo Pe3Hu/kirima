@@ -84,7 +84,8 @@ func init_window_size():
 	vec.size.window.height = ProjectSettings.get_setting("display/window/size/viewport_height")
 	vec.size.window.center = Vector2(vec.size.window.width/2, vec.size.window.height/2)
 	
-	vec.size.spielkarte = Vector2(60, 90)
+	#font size 28
+	vec.size.spielkarte = Vector2(40, 50)
 
 
 func init_scene() -> void:

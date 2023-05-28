@@ -11,19 +11,17 @@ class Croupier:
 
 	func _init(input_) -> void:
 		num.draw = {}
-		num.draw.total = 2
+		num.draw.total = 3
 		num.draw.current = num.draw.total
 		obj.spieler = input_.spieler
+		obj.spieltisch = null
 		init_scene()
 		init_album()
-		
-		obj.album.fill_thought()
 
 
 	func init_scene() -> void:
 		scene.myself = Global.scene.croupier.instantiate()
 		scene.myself.set_parent(self)
-		obj.spieler.scene.myself.get_node("Croupier").add_child(scene.myself)
 
 
 	func init_album() -> void:
@@ -45,14 +43,7 @@ class Spieler:
 		num.index = Global.num.index.spieler
 		Global.num.index.spieler += 1
 		obj.kasino = input_.kasino
-		obj.spieltisch = null
-		init_scene()
 		init_croupier()
-
-
-	func init_scene() -> void:
-		scene.myself = Global.scene.spieler.instantiate()
-		scene.myself.set_parent(self)
 
 
 	func init_croupier() -> void:

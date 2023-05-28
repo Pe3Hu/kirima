@@ -13,7 +13,7 @@ class Spieltisch:
 		num.index = Global.num.index.spieltisch
 		Global.num.index.spieltisch += 1
 		obj.kasino = input_.kasino
-		arr.spieler = input_.spielers
+		arr.croupier = input_.croupiers
 		init_scene()
 
 
@@ -33,7 +33,7 @@ class Kasino:
 	func _init() -> void:
 		init_scene()
 		init_spielers()
-		init_spieltisch()
+		init_spieltischs()
 
 
 	func init_scene() -> void:
@@ -41,11 +41,13 @@ class Kasino:
 		Global.node.game.get_node("Layer0").add_child(scene.myself)
 
 
-	func init_spieltisch() -> void:
+	func init_spieltischs() -> void:
+		arr.spieltisch = []
 		var input = {}
 		input.kasino = self
-		input.spielers = [arr.spieler.front(),arr.spieler.back()]
-		obj.spieltisch = Classes_0.Spieltisch.new(input)
+		input.croupiers = [arr.spieler.front().obj.croupier,arr.spieler.back().obj.croupier]
+		var spieltisch = Classes_0.Spieltisch.new(input)
+		arr.spieltisch.append(spieltisch)
 
 
 	func init_spielers() -> void:

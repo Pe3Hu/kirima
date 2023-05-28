@@ -16,9 +16,9 @@ script = ExtResource("1_fg5em")
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 2
-color = Color(0.168627, 0.168627, 0.168627, 1)
+color = Color(0, 0, 0, 1)
 
-[node name="Spieler" type="VBoxContainer" parent="."]
+[node name="Croupier" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 5
 alignment = 1

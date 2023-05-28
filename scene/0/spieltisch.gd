@@ -7,19 +7,19 @@ var parent = null
 func set_parent(parent_) -> void:
 	parent = parent_
 	
-	add_spielers()
+	set_spielers()
 	update_color()
 
 
-func add_spielers() -> void:
-		for spieler in parent.arr.spieler:
-			spieler.obj.spieltisch = parent
-			$Spieler.add_child(spieler.scene.myself)
+func set_spielers() -> void:
+		for croupier in parent.arr.croupier:
+			croupier.obj.spieltisch = parent
+			$Croupier.add_child(croupier.scene.myself)
 
 
 func update_color() -> void:
 	var max_h = 360.0
-	var h = float(parent.num.index)/Global.num.index.spieltisch
+	var h = 0.75#float(parent.num.index)/Global.num.index.spieltisch
 	var s = 0.75
 	var v = 1
 	

@@ -13,7 +13,9 @@ theme_override_constants/margin_bottom = 20
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 2
+color = Color(0.694118, 0.694118, 0.694118, 1)
 
 [node name="Spieltisch" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 0
 alignment = 1

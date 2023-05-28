@@ -18,11 +18,7 @@ class Spielkarte:
 
 	func init_scene() -> void:
 		scene.myself = Global.scene.spielkarte.instantiate()
-		set_labes()
-
-
-	func set_labes() -> void:
-		scene.myself.set_labes(self)
+		scene.myself.set_parent(self)
 
 
 #Альбом album
@@ -71,7 +67,7 @@ class Album:
 				arr.spielkarte.archive.append(spielkarte)
 
 
-	func add_spielkarte_to_album(spielkarte_) -> void:
+	func add_spielkarte_to_album(spielkarte_: Spielkarte) -> void:
 		obj.album.arr.spielkarte.archive.append(spielkarte_)
 
 
@@ -98,6 +94,12 @@ class Album:
 			var spielkarte = arr.spielkarte.dream.pop_front()
 			arr.spielkarte.dream.erase(spielkarte)
 			arr.spielkarte.memoir.append(spielkarte)
+
+
+	func convert_thought_into_dream(spielkarte_: Spielkarte) -> void:
+		arr.spielkarte.thought.erase(spielkarte_)
+		arr.spielkarte.dream.append(spielkarte_)
+		obj.croupier.scene.myself.convert_thought_into_dream(spielkarte_)
 
 
 	func fill_thought() -> void:
