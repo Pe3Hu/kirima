@@ -9,7 +9,7 @@ class Spielkarte:
 	var scene = {}
 
 
-	func _init(input_) -> void:
+	func _init(input_: Dictionary) -> void:
 		obj.spieler = input_.spieler
 		word.kind = input_.kind
 		num.rank = input_.rank
@@ -28,7 +28,7 @@ class Album:
 	var dict = {}
 
 
-	func _init(input_) -> void:
+	func _init(input_: Dictionary) -> void:
 		obj.croupier = input_.croupier
 		dict.ethnography = {}
 		init_spielkartes()

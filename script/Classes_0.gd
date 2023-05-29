@@ -9,7 +9,7 @@ class Spieltisch:
 	var scene = {}
 
 
-	func _init(input_) -> void:
+	func _init(input_: Dictionary) -> void:
 		num.index = Global.num.index.spieltisch
 		Global.num.index.spieltisch += 1
 		obj.kasino = input_.kasino

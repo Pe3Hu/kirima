@@ -3,6 +3,7 @@ extends Node
 
 func _ready() -> void:
 	Global.obj.kasino = Classes_0.Kasino.new()
+	Global.obj.glaube = Classes_3.Glaube.new()
 	#datas.sort_custom(func(a, b): return a.value < b.value) 012
 	
 	var spieltisch = Global.obj.kasino.arr.spieltisch.front()

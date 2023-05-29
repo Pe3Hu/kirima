@@ -9,7 +9,7 @@ class Croupier:
 	var scene = {}
 
 
-	func _init(input_) -> void:
+	func _init(input_: Dictionary) -> void:
 		num.draw = {}
 		num.draw.total = 3
 		num.draw.current = num.draw.total
@@ -39,7 +39,7 @@ class Spieler:
 	var scene = {}
 
 
-	func _init(input_) -> void:
+	func _init(input_: Dictionary) -> void:
 		num.index = Global.num.index.spieler
 		Global.num.index.spieler += 1
 		obj.kasino = input_.kasino

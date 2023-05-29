@@ -16,6 +16,7 @@ func init_num() -> void:
 	num.index = {}
 	num.index.spieltisch = 0
 	num.index.spieler = 0
+	num.index.kleriker = 0
 
 
 func init_dict() -> void:
