@@ -17,6 +17,7 @@ class Kardinal:
 class Tempel:
 	var arr = {}
 	var obj = {}
+	var dict = {}
 	var scene = {}
 
 
@@ -46,6 +47,25 @@ class Tempel:
 			input.tempel = self
 			var kleriker = Classes_4.Kleriker.new(input)
 			arr.kleriker.append(kleriker)
+		
+		set_basic_scherbes()
+
+
+	func set_basic_scherbes() -> void:
+		dict.scherbe = {}
+		
+		for wind_rose in Global.arr.wind_rose:
+			dict.scherbe[wind_rose] = []
+		
+		Global.arr.wind_rose = ["N"]
+		
+		for _i in arr.kleriker.size():#+1:
+			for wind_rose in Global.arr.wind_rose:
+				var input = {}
+				input.wind_rose = wind_rose
+				input.polyhedron = 3
+				var scherbe = Classes_5.Scherbe.new(input)
+				dict.scherbe[wind_rose].append(scherbe)
 
 
 #Вера glaube
