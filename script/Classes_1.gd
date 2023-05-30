@@ -42,7 +42,10 @@ class Spieler:
 	func _init(input_: Dictionary) -> void:
 		num.index = Global.num.index.spieler
 		Global.num.index.spieler += 1
-		obj.kasino = input_.kasino
+		num.order = -1
+		obj.wettbewerb = input_.wettbewerb
+		obj.kleriker = input_.kleriker
+		obj.kleriker.obj.spieler = self
 		init_croupier()
 
 

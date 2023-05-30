@@ -14,7 +14,8 @@ class Kleriker:
 		num.index = Global.num.index.kleriker
 		Global.num.index.kleriker += 1
 		obj.tempel = input_.tempel
-		init_credo()
+		word.credo = input_.credo
+		#init_credo()
 		init_mönch()
 		#init_scene()
 
@@ -26,7 +27,7 @@ class Kleriker:
 
 
 	func init_credo() -> void:
-		word.credo = Global.get_random_element(Global.dict.credo.title.keys())
+		word.credo = "jester"#Global.get_random_element(Global.dict.credo.keys())
 
 
 	func init_mönch() -> void:

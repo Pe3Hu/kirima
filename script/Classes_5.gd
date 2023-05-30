@@ -188,12 +188,15 @@ class Mönch:
 	var arr = {}
 	var obj = {}
 	var num = {}
+	var dict = {}
 	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		obj.kleriker = input_.kleriker
+		dict.gebet = {}
 		init_achteck()
+		set_regular_gebet()
 		#init_scene()
 
 
@@ -216,4 +219,25 @@ class Mönch:
 			obj.achteck.suit_up_scherbe(scherbe)
 		
 		obj.achteck.update_stats()
+
+
+	func set_regular_gebet() -> void:
+		var options = []
+		
+		for title in Global.dict.gebet.title.keys():
+			var gebet = Global.dict.gebet.title[title]
+			
+			if gebet.creed == obj.kleriker.word.credo and gebet.type == "regular":
+				options.append(gebet)
+		
+		var input = Global.get_random_element(options)
+		input.mönch = self
+		dict.gebet.regular = Classes_6.Gebet.new(input)
+
+
+	func get_bookmark(scatter_: int) -> int:
+		var bookmark = -1
+		#var album = obj.kleriker.obj.spieler.obj.croupier.obj.album
+		
+		return bookmark
 

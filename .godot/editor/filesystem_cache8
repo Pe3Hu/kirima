@@ -1,5 +1,5 @@
 2a60927148abd1d33b818b535e306557
-::res://::1685453080
+::res://::1685481513
 icon.png::CompressedTexture2D::2432420761471245026::1676094585::1685290439::1::::<><>::
 icon.svg::CompressedTexture2D::9162371498834860976::1679058444::1685290439::1::::<><>::
 README.md::TextFile::-1::1685311647::0::1::::<><>::
@@ -13,28 +13,30 @@ Marlboro.ttf::FontFile::1499582478604000857::1673874020::1685290439::1::::<><>::
 metal lord ot.otf::FontFile::3619300847126422558::1682126186::1685290439::1::::<><>::
 neuropolitical rg.otf::FontFile::2325526762121942984::1336566082::1685290439::1::::<><>::
 rimouski sb.otf::FontFile::2683584631797712805::1657615528::1685290439::1::::<><>::
-::res://asset/json/::1685383957
+::res://asset/json/::1685458910
+credo_data.json::JSON::-1::1685458899::0::1::::<><>::
 octagon_data.json::JSON::-1::1685383957::0::1::::<><>::
 ::res://asset/png/::1685289700
 ::res://asset/tileset/::1679229922
 ::res://scene/::1685369543
 Game.gd::GDScript::-1::1685369543::0::1::::<>Node<>::
 Game.tscn::PackedScene::8246655032211948728::1685290156::0::1::::<><>::res://scene/Game.gd
-::res://scene/0/::1685457651
-kasino.tscn::PackedScene::8264477552076341026::1685457651::0::1::::<><>::
+::res://scene/0/::1685459313
+kasino.tscn::PackedScene::8264477552076341026::1685459313::0::1::::<><>::
 spieltisch.gd::GDScript::-1::1685303623::0::1::::<>MarginContainer<>::
-spieltisch.tscn::PackedScene::2605217249599289161::1685457651::0::1::::<><>::res://scene/0/spieltisch.gd
-::res://scene/1/::1685457651
+spieltisch.tscn::PackedScene::2605217249599289161::1685459313::0::1::::<><>::res://scene/0/spieltisch.gd
+::res://scene/1/::1685459313
 croupier.gd::GDScript::-1::1685311683::0::1::::<>MarginContainer<>::
-croupier.tscn::PackedScene::8056595767390012993::1685457651::0::1::::<><>::res://scene/1/croupier.gd
-::res://scene/2/::1685457668
+croupier.tscn::PackedScene::8056595767390012993::1685459313::0::1::::<><>::res://scene/1/croupier.gd
+::res://scene/2/::1685459465
 spielkarte.gd::GDScript::-1::1685302180::0::1::::<>MarginContainer<>::
-spielkarte.tscn::PackedScene::6525967958293324051::1685457784::0::1::::<><>::res://scene/2/spielkarte.gd<>uid://b1ljoth5axgt3
-::res://script/::1685457668
+spielkarte.tscn::PackedScene::6525967958293324051::1685459465::0::1::::<><>::res://scene/2/spielkarte.gd<>uid://b1ljoth5axgt3
+::res://script/::1685459465
 Classes_0.gd::GDScript::-1::1685369430::0::1::::<>Node<>::
 Classes_1.gd::GDScript::-1::1685369424::0::1::::<>Node<>::
 Classes_2.gd::GDScript::-1::1685369422::0::1::::<>Node<>::
 Classes_3.gd::GDScript::-1::1685454234::0::1::::<>Node<>::
-Classes_4.gd::GDScript::-1::1685457784::0::1::::<>Node<>::
+Classes_4.gd::GDScript::-1::1685459465::0::1::::<>Node<>::
 Classes_5.gd::GDScript::-1::1685457668::0::1::::<>Node<>::
-Global.gd::GDScript::-1::1685457272::0::1::::<>Node<>::
+Classes_6.gd::GDScript::-1::1685457814::0::1::::<>Node<>::
+Global.gd::GDScript::-1::1685459465::0::1::::<>Node<>::

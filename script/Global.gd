@@ -77,8 +77,9 @@ func init_dict() -> void:
 	]
 	
 	init_octagon()
-	init_credo()
+	init_gebet()
 	init_scherbe()
+	init_etikett()
 	init_base_stat()
 
 
@@ -140,23 +141,48 @@ func init_octagon() -> void:
 		dict.octagon[data.aspect][data.type][data.category] = data[polyhedron]
 
 
-func init_credo() -> void:
+func init_gebet() -> void:
+	dict.gebet = {}
 	dict.credo = {}
-	dict.credo.title = {}
-	var path = "res://asset/json/credo_data.json"
+	dict.gebet.title = {}
+	var path = "res://asset/json/gebet_data.json"
 	var array = load_data(path)
 	
-	for credo in array:
+	for gebet in array:
 		var data = {}
 
-		for key in credo.keys():
-			if key != "Title":
-				data[key.to_lower()] = credo[key]
+		for key in gebet.keys():
+			#if key != "Title":
+			data[key.to_lower()] = gebet[key]
 				
-				if typeof(credo[key]) == TYPE_STRING:
-					data[key.to_lower()] = credo[key].to_lower()
+			if typeof(gebet[key]) == TYPE_STRING:
+				data[key.to_lower()] = gebet[key].to_lower()
+			
+			if key == "Creed" and !dict.credo.keys().has(gebet[key].to_lower()):
+				dict.credo[gebet[key].to_lower()] = []
 		
-		dict.credo.title[credo["Title"].to_lower()] = data
+		dict.gebet.title[gebet["Title"].to_lower()] = data
+
+
+func init_etikett() -> void:
+	dict.etikett = {}
+	dict.etikett.title = {}
+	var path = "res://asset/json/etikett_data.json"
+	var array = load_data(path)
+	
+	for etikett in array:
+		var data = {}
+
+		for key in etikett.keys():
+			if key == "source":
+				data[key] = etikett[key].rsplit(", ")
+			else:
+				data[key] = etikett[key]
+			
+			if key == "duplicate change":
+				data[key] = data[key].replace('"', "")
+		
+		dict.etikett.title[etikett["title"]] = data
 
 
 func init_scherbe() -> void:
@@ -267,6 +293,7 @@ func init_window_size():
 
 func init_scene() -> void:
 	scene.kasino = load("res://scene/0/kasino.tscn")
+	scene.wettbewerb = load("res://scene/0/wettbewerb.tscn")
 	scene.spieltisch = load("res://scene/0/spieltisch.tscn")
 	scene.spieler = load("res://scene/1/spieler.tscn")
 	scene.croupier = load("res://scene/1/croupier.tscn")

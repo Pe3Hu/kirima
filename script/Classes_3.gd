@@ -11,6 +11,12 @@ class Kardinal:
 
 	func _init(input_: Dictionary) -> void:
 		obj.tempel = input_.tempel
+		arr.challenger = []
+
+
+	func set_challengers() -> void:
+		for kleriker in obj.tempel.arr.kleriker:
+			arr.challenger.append(kleriker)
 
 
 #Храм tempel
@@ -24,9 +30,11 @@ class Tempel:
 	func _init(input_: Dictionary) -> void:
 		obj.glaube = input_.glaube
 		#init_scene()
+		init_kardinal()
 		init_klerikers()
 		set_basic_scherbes()
 		suit_up_basic_scherbes()
+		obj.kardinal.set_challengers()
 
 
 	func init_scene() -> void:
@@ -37,16 +45,17 @@ class Tempel:
 	func init_kardinal() -> void:
 		var input = {}
 		input.tempel = self
-		obj.kleriker = Classes_3.Kardinal.new(input)
+		obj.kardinal = Classes_3.Kardinal.new(input)
 
 
 	func init_klerikers() -> void:
 		arr.kleriker = []
 		var n = 1
 		
-		for _i in n:
+		for credo in Global.dict.credo.keys():
 			var input = {}
 			input.tempel = self
+			input.credo = credo
 			var kleriker = Classes_4.Kleriker.new(input)
 			arr.kleriker.append(kleriker)
 

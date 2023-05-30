@@ -1,30 +1,65 @@
 extends Node
 
 
-#Молитва gebet
-class Gebet:
-	var arr = {}
-	var obj = {}
+#Метка etikett
+class Etikett:
 	var num = {}
-	var scene = {}
+	var word = {}
 
 
 	func _init(input_: Dictionary) -> void:
-		num.index = Global.num.index.kleriker
-		Global.num.index.kleriker += 1
-		obj.tempel = input_.tempel
-		init_mönch()
-		#init_scene()
+		word.title = input_.title
+		num.counter = input_.counter
+		num.bookmark = input_.bookmark
 
 
-	func init_scene() -> void:
-		scene.myself = Global.scene.kleriker.instantiate()
-		scene.myself.set_parent(self)
-		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
+#Молитва gebet
+class Gebet:
+	var obj = {}
+	var num = {}
+	var word = {}
 
 
-	func init_mönch() -> void:
+	func _init(input_: Dictionary) -> void:
+		word.title = input_.title
+		word.type = input_.type
+		word.auxiliary = input_.auxiliary
+		word.etikett = input_.etikett
+		num.echo = input_.echo
+		num.multiplier = input_.multiplier
+		obj.mönch = input_.mönch
+
+
+	func calc_impact() -> void:
+		var aspects = ["power"]
+		aspects.append(word.auxiliary)
+		var value = 0
+		
+		for aspect in aspects:
+			var a = obj.mönch.obj.achteck.dict
+			value += obj.mönch.obj.achteck.num.aspect[aspect].result * float(num.multiplier) * 0.01
+		
+		var description = Global.dict.etikett.title[word.etikett]
 		var input = {}
-		input.kleriker = self
-		obj.mönch = Classes_5.Mönch.new(input)
-
+		input.title = word.etikett
+		input.counter = pow(value, 1.0/description.degree)
+		input.bookmark = obj.mönch.get_bookmark(description.scatter)
+		
+		match word.etikett:
+			"stroke of lightning":
+				pass
+			"wild flame":
+				pass
+			"spread of poison":
+				pass
+			"cliff collapse":
+				pass
+			"tidal wave":
+				pass
+			"long blizzard":
+				pass
+			"sudden hurricane":
+				pass
+			"parched ground":
+				pass
+		
