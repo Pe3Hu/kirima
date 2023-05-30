@@ -1,12 +1,11 @@
 extends Node
 
 
-#Священнослужитель kleriker
-class Kleriker:
+#Молитва gebet
+class Gebet:
 	var arr = {}
 	var obj = {}
 	var num = {}
-	var word = {}
 	var scene = {}
 
 
@@ -14,7 +13,6 @@ class Kleriker:
 		num.index = Global.num.index.kleriker
 		Global.num.index.kleriker += 1
 		obj.tempel = input_.tempel
-		init_credo()
 		init_mönch()
 		#init_scene()
 
@@ -25,21 +23,8 @@ class Kleriker:
 		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
 
 
-	func init_credo() -> void:
-		word.credo = Global.get_random_element(Global.dict.credo.title.keys())
-
-
 	func init_mönch() -> void:
 		var input = {}
 		input.kleriker = self
 		obj.mönch = Classes_5.Mönch.new(input)
-
-
-#Кредо credo
-class Credo:
-	var word = {}
-
-
-	func _init(input_: Dictionary) -> void:
-		word.title = input_.title
 

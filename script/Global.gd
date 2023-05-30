@@ -17,6 +17,18 @@ func init_num() -> void:
 	num.index.spieltisch = 0
 	num.index.spieler = 0
 	num.index.kleriker = 0
+	
+	num.stat = {}
+	num.stat.min = {}
+	num.stat.min.rage = 100
+	num.stat.min.auxiliary = 100
+	
+	num.aspect = {}
+	num.aspect.group = {}
+	num.aspect.group.main = 2
+	num.aspect.group.auxiliary = 1
+	num.aspect.synergy = {}
+	num.aspect.synergy.auxiliary = 0.25
 
 
 func init_dict() -> void:
@@ -65,7 +77,9 @@ func init_dict() -> void:
 	]
 	
 	init_octagon()
+	init_credo()
 	init_scherbe()
+	init_base_stat()
 
 
 func init_octagon() -> void:
@@ -126,6 +140,25 @@ func init_octagon() -> void:
 		dict.octagon[data.aspect][data.type][data.category] = data[polyhedron]
 
 
+func init_credo() -> void:
+	dict.credo = {}
+	dict.credo.title = {}
+	var path = "res://asset/json/credo_data.json"
+	var array = load_data(path)
+	
+	for credo in array:
+		var data = {}
+
+		for key in credo.keys():
+			if key != "Title":
+				data[key.to_lower()] = credo[key]
+				
+				if typeof(credo[key]) == TYPE_STRING:
+					data[key.to_lower()] = credo[key].to_lower()
+		
+		dict.credo.title[credo["Title"].to_lower()] = data
+
+
 func init_scherbe() -> void:
 	dict.scherbe = {}
 	dict.scherbe.aspect = {}
@@ -155,10 +188,10 @@ func init_scherbe() -> void:
 		for index in indexs.size():
 			var wind_rose = arr.wind_rose[indexs[index]]
 			var aspect = dict.scherbe.wind_rose[wind_rose]
-			dict.scherbe.group[key][aspect] = 1
+			dict.scherbe.group[key][aspect] = num.aspect.group.auxiliary
 		
 		var aspect = dict.scherbe.wind_rose[key]
-		dict.scherbe.group[key][aspect] += 1
+		dict.scherbe.group[key][aspect] += num.aspect.group.main - num.aspect.group.auxiliary
 	
 	dict.scherbe.polyhedron = {}
 	
@@ -170,12 +203,46 @@ func init_scherbe() -> void:
 		
 		if _i == 0:
 			dict.scherbe.polyhedron[polyhedron]["min"] += 1
+	
+	dict.scherbe.auxiliary = {}
+	
+	for wind_rose in dict.scherbe.group.keys():
+		var aspects = {}
+		aspects.main = []
+		aspects.auxiliary = []
+		
+		for aspect in dict.scherbe.group[wind_rose]:
+			match dict.scherbe.group[wind_rose][aspect]:
+				num.aspect.group.main:
+					aspects.main.append(aspect)
+				num.aspect.group.auxiliary:
+					aspects.auxiliary.append(aspect)
+		
+		var main = aspects.main.front()
+		
+		if arr.main.has(main):
+			dict.scherbe.auxiliary[main] = aspects.auxiliary
+
+
+func init_base_stat() -> void:
+	dict.stat = {}
+	dict.stat.base = {}
+	dict.stat.base["health"] = 500
+	dict.stat.base["body"] = num.stat.min.auxiliary
+	dict.stat.base["rage"] = 1000
+	dict.stat.base["sense"] = num.stat.min.auxiliary
+	dict.stat.base["power"] = 250
+	dict.stat.base["mind"] = num.stat.min.auxiliary
+	dict.stat.base["mana"] = 100
+	dict.stat.base["spirit"] = num.stat.min.auxiliary
 
 
 func init_arr() -> void:
 	arr.sequence = {}
 	arr.color = ["Red","Green","Blue","Yellow"]
 	arr.wind_rose = ["N","NE","E","SE","S","SW","W","NW"]
+	arr.auxiliary = ["body","sense","mind","spirit"]
+	arr.main = ["health","rage","power","mana"]
 	arr.polyhedron = [3,4,5,6]
 
 
@@ -208,8 +275,8 @@ func init_scene() -> void:
 
 func _ready() -> void:
 	init_arr()
-	init_dict()
 	init_num()
+	init_dict()
 	init_node()
 	init_vec()
 	init_scene()

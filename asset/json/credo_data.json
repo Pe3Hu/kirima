@@ -1,0 +1,66 @@
+[
+ {
+  "Title": "Jester",
+  "Type": "Regular",
+  "Auxiliary": "Sense",
+  "Multiplier": 70,
+  "Echo": 1,
+  "Token": "stroke of lightning"
+ },
+ {
+  "Title": "Potter",
+  "Type": "Regular",
+  "Auxiliary": "Mind",
+  "Multiplier": 50,
+  "Echo": 1,
+  "Token": "wild flame"
+ },
+ {
+  "Title": "Peasant",
+  "Type": "Regular",
+  "Auxiliary": "Body",
+  "Multiplier": 10,
+  "Echo": 1,
+  "Token": "spread of poison"
+ },
+ {
+  "Title": "Miner",
+  "Type": "Regular",
+  "Auxiliary": "Body",
+  "Multiplier": 110,
+  "Echo": 1,
+  "Token": "cliff collapse"
+ },
+ {
+  "Title": "Sailor",
+  "Type": "Regular",
+  "Auxiliary": "Sense",
+  "Multiplier": 30,
+  "Echo": 1,
+  "Token": "tidal wave"
+ },
+ {
+  "Title": "Sentinel",
+  "Type": "Regular",
+  "Auxiliary": "Spirit",
+  "Multiplier": 60,
+  "Echo": 1,
+  "Token": "long blizzard"
+ },
+ {
+  "Title": "Messenger",
+  "Type": "Regular",
+  "Auxiliary": "Mind",
+  "Multiplier": 40,
+  "Echo": 1,
+  "Token": "sudden hurricane "
+ },
+ {
+  "Title": "Blacksmith",
+  "Type": "Regular",
+  "Auxiliary": "Spirit",
+  "Multiplier": 80,
+  "Echo": 1,
+  "Token": "parched ground"
+ }
+]

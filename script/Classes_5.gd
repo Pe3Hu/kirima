@@ -14,7 +14,7 @@ class Scherbe:
 	func _init(input_: Dictionary) -> void:
 		num.polyhedron = input_.polyhedron
 		word.wind_rose = input_.wind_rose
-		obj.mönch = null
+		obj.achteck = null
 		init_stat()
 		#init_scene()
 
@@ -92,18 +92,95 @@ class Scherbe:
 class Achteck:
 	var arr = {}
 	var obj = {}
+	var num = {}
+	var dict = {}
 	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		obj.mönch = input_.mönch
 		#init_scene()
+		init_aspect()
+		init_scherbe_slots()
 
 
 	func init_scene() -> void:
 		scene.myself = Global.scene.kleriker.instantiate()
 		scene.myself.set_parent(self)
 		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
+
+
+	func init_aspect() -> void:
+		num.aspect = {}
+		
+		for aspect in Global.arr.aspect:
+			num.aspect[aspect] = {}
+			num.aspect[aspect].base = Global.dict.stat.base[aspect]
+			num.aspect[aspect].primary = 0
+			num.aspect[aspect].secondary = 0
+			num.aspect[aspect].multiplier = 0
+			num.aspect[aspect].result = 0
+
+
+	func init_scherbe_slots() -> void:
+		dict.scherbe = {}
+		
+		for wind_rose in Global.arr.wind_rose:
+			dict.scherbe[wind_rose] = null
+
+
+	func suit_up_scherbe(scherbe_: Scherbe) -> void:
+		take_off_scherbe(scherbe_.word.wind_rose)
+		dict.scherbe[scherbe_.word.wind_rose] = scherbe_
+		scherbe_.obj.achteck = self
+		amend_stats_by_scherbe(scherbe_, 1)
+
+
+	func take_off_scherbe(wind_rose_: String) -> void:
+		if dict.scherbe[wind_rose_] != null:
+			amend_stats_by_scherbe(dict.scherbe[wind_rose_], -1)
+			dict.scherbe[wind_rose_].obj.achteck = null
+			dict.scherbe[wind_rose_] = null
+
+
+	func amend_stats_by_scherbe(scherbe_: Scherbe, sign: int) -> void:
+		for aspect in scherbe_.dict.stat.keys():
+			for type in scherbe_.dict.stat[aspect].keys():
+				for category in scherbe_.dict.stat[aspect][type].keys():
+					var value = scherbe_.dict.stat[aspect][type][category]
+					
+					match type:
+						"bonus":
+							num.aspect[aspect][category] += value * sign
+						"multiplier":
+							num.aspect[aspect].multiplier += value * 0.01 * sign
+
+
+	func update_stats() -> void:
+		for aspect in Global.arr.auxiliary:
+			formula_stat(aspect)
+		
+		for aspect in Global.arr.main:
+			formula_stat(aspect)
+
+
+	func formula_stat(aspect_: String) -> void:
+		var stat = num.aspect[aspect_]
+		var sign = 1
+		
+		if aspect_ == "rage":
+			sign = -1
+		
+		stat.result = (stat.base + sign * stat.primary) * (1 + sign * stat.multiplier) + sign * stat.secondary
+		
+		if Global.arr.main.has(aspect_):
+			for auxiliary in Global.dict.scherbe.auxiliary[aspect_]:
+				stat.result += sign * num.aspect[auxiliary].result * Global.num.aspect.synergy.auxiliary
+		
+		if aspect_ == "rage":
+			stat.result = max(Global.num.stat.min.rage, stat.result)
+		
+		stat.result = ceil(stat.result)
 
 
 #Монах mönch 
@@ -116,7 +193,7 @@ class Mönch:
 
 	func _init(input_: Dictionary) -> void:
 		obj.kleriker = input_.kleriker
-		init_kardinal()
+		init_achteck()
 		#init_scene()
 
 
@@ -126,7 +203,17 @@ class Mönch:
 		obj.kleriker.scene.myself.get_node("Kleriker").add_child(scene.myself)
 
 
-	func init_kardinal() -> void:
+	func init_achteck() -> void:
 		var input = {}
 		input.mönch = self
 		obj.achteck = Classes_5.Achteck.new(input)
+
+
+	func choose_best_outfit() -> void:
+		for wind_rose in obj.achteck.dict.scherbe.keys():
+			var options = obj.kleriker.obj.tempel.dict.scherbe[wind_rose]
+			var scherbe = options.front()
+			obj.achteck.suit_up_scherbe(scherbe)
+		
+		obj.achteck.update_stats()
+
