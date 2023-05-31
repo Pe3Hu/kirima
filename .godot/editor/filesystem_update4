@@ -16,3 +16,4 @@ res://scene/0/wettbewerb.tscn
 res://scene/0/spieltisch.gd
 res://scene/2/spielkarte.gd
 res://scene/1/croupier.gd
+res://script/Classes_2.gd

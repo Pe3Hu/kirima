@@ -216,7 +216,8 @@ class Mönch:
 
 	func get_bookmark(scatter_: int) -> int:
 		var bookmark = -1
-		#var album = obj.kleriker.obj.spieler.obj.croupier.obj.album
+		var album = obj.kleriker.obj.spieler.obj.croupier.obj.album
 		
+		#print(album.arr.spielkarte.archive.size())
 		return bookmark
 

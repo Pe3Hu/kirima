@@ -6,15 +6,20 @@ class Croupier:
 	var num = {}
 	var obj = {}
 	var dict = {}
+	var flag = {}
 	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		num.draw = {}
-		num.draw.total = 3
+		num.draw.total = input_.draw
 		num.draw.current = num.draw.total
+		num.harmony = 0
 		obj.spieler = input_.spieler
 		obj.spieltisch = null
+		flag.skip = false
+		flag.white_skin = false
+		dict.out = {}
 		init_scene()
 		init_album()
 
@@ -29,6 +34,57 @@ class Croupier:
 		input.croupier = self
 		obj.album = Classes_2.Album.new(input)
 
+
+	func pull_standard_spielkartes():
+		flag.skip = false
+		flag.white_skin = false
+		obj.album.fill_thought()
+		
+		for _i in range(obj.album.arr.spielkarte.thought.size()-1, -1, -1):
+			var spielkarte = obj.album.arr.spielkarte.thought[_i]
+			obj.album.convert_thought_into_dream(spielkarte)
+		
+		update_harmony()
+
+
+	func pull_additional_spielkartes():
+		while !flag.skip:
+			var outcomes = calc_chance_of_losing()
+			var outcome = Global.get_random_key(outcomes)
+			
+			match outcome:
+				"good":
+					obj.album.pull_spielkarte_from_archive()
+					var spielkarte = obj.album.arr.spielkarte.thought.front()
+					obj.album.convert_thought_into_dream(spielkarte)
+					update_harmony()
+				"bad":
+					flag.skip = true
+
+
+	func update_harmony():
+		num.harmony = 0
+		
+		for spielkarte in obj.album.arr.spielkarte.dream:
+			num.harmony += spielkarte.num.rank
+		
+		if num.harmony > Global.num.spielkarte.rank.white_skin:
+			flag.skip = true
+			flag.white_skin = true
+
+
+	func calc_chance_of_losing() -> Dictionary:
+		var outcomes = {}
+		outcomes.good = 0
+		outcomes.bad = 0
+		
+		for rank in dict.out.keys():
+			if rank + num.harmony > Global.num.spielkarte.rank.white_skin:
+				outcomes.bad += dict.out[rank].size()
+			else:
+				outcomes.good += dict.out[rank].size()
+		
+		return outcomes
 
 
 #Игрок spieler
@@ -51,7 +107,7 @@ class Spieler:
 
 	func init_croupier() -> void:
 		var input = {}
-		input.draw = 5
+		input.draw = 2
 		input.spieler = self
 		obj.croupier = Classes_1.Croupier.new(input)
 

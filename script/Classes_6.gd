@@ -42,5 +42,5 @@ class Gebet:
 		var description = Global.dict.etikett.title[word.etikett]
 		var input = {}
 		input.title = word.etikett
-		input.counter = pow(value, 1.0/description.degree)
+		input.counter = ceil(pow(value, 1.0/description.degree))
 		input.bookmark = obj.mönch.get_bookmark(description.scatter)

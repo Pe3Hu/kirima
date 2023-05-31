@@ -23,6 +23,45 @@ class Spieltisch:
 		obj.wettbewerb.scene.myself.get_node("Spieltisch").add_child(scene.myself)
 
 
+	func make_deal() -> void:
+		var spieler = {}
+		spieler.winner = []
+		spieler.loser = []
+		spieler.tie = []
+		scene.myself.update_color()
+		
+		for croupier in arr.croupier:
+			croupier.pull_standard_spielkartes()
+			croupier.pull_additional_spielkartes()
+			
+			var data = {}
+			data.croupier = croupier
+			data.harmony = croupier.num.harmony
+			
+			if !croupier.flag.white_skin:
+				spieler.winner.append(data)
+			else:
+				spieler.loser.append(data)
+		
+		if spieler.winner.size() > 0:
+			if spieler.winner.size() == 2:
+				if spieler.winner.front().harmony != spieler.winner.back().harmony:
+					spieler.winner.sort_custom(func(a, b): return a.harmony > b.harmony)
+					var loser = spieler.winner.pop_back()
+					spieler.loser.append(loser)
+				else:
+					while spieler.winner.size() > 0:
+						var data = spieler.winner.pop_front()
+						spieler.tie.append(data)
+		
+		for key in spieler.keys():
+			for data in spieler[key]:
+				data.croupier.scene.myself.recolor_spielkartes_bg(key)
+		
+		if spieler.winner.size() == 1:
+			var winner = spieler.winner.front().croupier.obj.spieler
+			winner.obj.kleriker.obj.mönch.dict.gebet.regular.calc_impact()
+
 
 #Турнир wettbewerb
 class Wettbewerb:
@@ -97,7 +136,7 @@ class Wettbewerb:
 
 	func start_round() -> void:
 		init_spieltischs()
-		make_deal()
+		make_spieltisch_deals()
 
 
 	func init_spieltischs() -> void:
@@ -118,14 +157,9 @@ class Wettbewerb:
 			arr.spieltisch.append(spieltisch)
 
 
-	func make_deal() -> void:
+	func make_spieltisch_deals() -> void:
 		for spieltisch in arr.spieltisch:
-			spieltisch.scene.myself.update_color()
-			
-			for croupier in spieltisch.arr.croupier:
-				croupier.obj.album.fill_thought()
-				var spielkarte = croupier.obj.album.arr.spielkarte.thought.front()
-				croupier.obj.album.convert_thought_into_dream(spielkarte)
+			spieltisch.make_deal()
 
 
 #Казино kasino

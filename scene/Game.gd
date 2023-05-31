@@ -9,17 +9,6 @@ func _ready() -> void:
 	var tempels = []
 	tempels.append_array(Global.obj.glaube.arr.tempel)
 	Global.obj.kasino.add_wettbewerb(tempels)
-#	var spieltisch = Global.obj.kasino.arr.spieltisch.front()
-#
-#	for croupier in spieltisch.arr.croupier:
-#		croupier.obj.album.fill_thought()
-#		var spielkarte = croupier.obj.album.arr.spielkarte.thought.front()
-#		croupier.obj.album.convert_thought_into_dream(spielkarte)
-	
-	
-	for tempel in Global.obj.glaube.arr.tempel:
-		for kleriker in tempel.arr.kleriker:
-			kleriker.obj.mönch.dict.gebet.regular.calc_impact()
 
 
 func _input(event) -> void:

@@ -29,6 +29,16 @@ func init_num() -> void:
 	num.aspect.group.auxiliary = 1
 	num.aspect.synergy = {}
 	num.aspect.synergy.auxiliary = 0.25
+	
+	num.separation = {}
+	num.separation.croupier = 5
+	num.separation.spielkarte = 5
+	
+	num.spielkarte = {}
+	num.spielkarte.rank = {}
+	num.spielkarte.rank.max = 7
+	num.spielkarte.rank.min = 1
+	num.spielkarte.rank.white_skin = num.spielkarte.rank.max * 2 + num.spielkarte.rank.min
 
 
 func init_dict() -> void:

@@ -20,7 +20,7 @@ script = ExtResource("1_r6ldh")
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 2
-color = Color(0.65098, 0.65098, 0.65098, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
