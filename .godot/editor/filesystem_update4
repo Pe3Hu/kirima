@@ -14,3 +14,5 @@ res://asset/json/etikett_data.json
 res://script/Classes_3.gd
 res://scene/0/wettbewerb.tscn
 res://scene/0/spieltisch.gd
+res://scene/2/spielkarte.gd
+res://scene/1/croupier.gd

@@ -18,7 +18,7 @@ func set_spielers() -> void:
 
 func update_color() -> void:
 	var max_h = 360.0
-	var h = 0.75#float(parent.num.index)/Global.num.index.spieltisch
+	var h = float(parent.num.index)/Global.num.index.spieltisch
 	var s = 0.75
 	var v = 1
 	

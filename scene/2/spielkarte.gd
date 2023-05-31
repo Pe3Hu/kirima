@@ -6,7 +6,6 @@ var parent = null
 
 func set_parent(parent_) -> void:
 	parent = parent_
-	
 	update_rec_size()
 	update_labes()
 

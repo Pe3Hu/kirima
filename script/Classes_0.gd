@@ -65,6 +65,9 @@ class Wettbewerb:
 		
 		for tempel in dict.spieler.keys():
 			num.challengers = min(num.challengers, dict.spieler[tempel].size())
+			
+			for spieler in dict.spieler[tempel]:
+				spieler.obj.croupier.scene.myself.update_color()
 
 
 	func init_standings() -> void:
@@ -93,6 +96,11 @@ class Wettbewerb:
 
 
 	func start_round() -> void:
+		init_spieltischs()
+		make_deal()
+
+
+	func init_spieltischs() -> void:
 		arr.spieltisch = []
 		
 		for pair in dict.standings[num.round.current]:
@@ -108,6 +116,16 @@ class Wettbewerb:
 			
 			var spieltisch = Classes_0.Spieltisch.new(input)
 			arr.spieltisch.append(spieltisch)
+
+
+	func make_deal() -> void:
+		for spieltisch in arr.spieltisch:
+			spieltisch.scene.myself.update_color()
+			
+			for croupier in spieltisch.arr.croupier:
+				croupier.obj.album.fill_thought()
+				var spielkarte = croupier.obj.album.arr.spielkarte.thought.front()
+				croupier.obj.album.convert_thought_into_dream(spielkarte)
 
 
 #Казино kasino

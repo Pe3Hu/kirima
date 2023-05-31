@@ -16,7 +16,6 @@ class Scherbe:
 		word.wind_rose = input_.wind_rose
 		obj.achteck = null
 		init_stat()
-		#init_scene()
 
 
 	func init_stat() -> void:
@@ -82,12 +81,6 @@ class Scherbe:
 		dict.stat[data.aspect][data.type][category_] = value
 
 
-	func init_scene() -> void:
-		scene.myself = Global.scene.kleriker.instantiate()
-		scene.myself.set_parent(self)
-		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
-
-
 #Восьмиугольник achteck 
 class Achteck:
 	var arr = {}
@@ -99,15 +92,8 @@ class Achteck:
 
 	func _init(input_: Dictionary) -> void:
 		obj.mönch = input_.mönch
-		#init_scene()
 		init_aspect()
 		init_scherbe_slots()
-
-
-	func init_scene() -> void:
-		scene.myself = Global.scene.kleriker.instantiate()
-		scene.myself.set_parent(self)
-		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
 
 
 	func init_aspect() -> void:
@@ -197,13 +183,6 @@ class Mönch:
 		dict.gebet = {}
 		init_achteck()
 		set_regular_gebet()
-		#init_scene()
-
-
-	func init_scene() -> void:
-		scene.myself = Global.scene.kleriker.instantiate()
-		scene.myself.set_parent(self)
-		obj.kleriker.scene.myself.get_node("Kleriker").add_child(scene.myself)
 
 
 	func init_achteck() -> void:

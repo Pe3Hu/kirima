@@ -44,22 +44,3 @@ class Gebet:
 		input.title = word.etikett
 		input.counter = pow(value, 1.0/description.degree)
 		input.bookmark = obj.mönch.get_bookmark(description.scatter)
-		
-		match word.etikett:
-			"stroke of lightning":
-				pass
-			"wild flame":
-				pass
-			"spread of poison":
-				pass
-			"cliff collapse":
-				pass
-			"tidal wave":
-				pass
-			"long blizzard":
-				pass
-			"sudden hurricane":
-				pass
-			"parched ground":
-				pass
-		
