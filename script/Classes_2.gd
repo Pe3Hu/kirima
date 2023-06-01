@@ -23,6 +23,13 @@ class Spielkarte:
 		scene.myself.set_parent(self)
 
 
+	func clear_etiketts() -> void:
+		while arr.etikett.size() > 0:
+			var etikett = arr.etikett.pop_front()
+			etikett.obj.spielkarte = null
+			scene.myself.queue_free()
+
+
 #Альбом album
 class Album:
 	var obj = {}
@@ -79,20 +86,24 @@ class Album:
 		obj.croupier.dict.out[spielkarte.num.rank].erase(spielkarte.word.kind)
 		
 		if arr.spielkarte.archive.size() == 0:
-			while arr.spielkarte.memoir.size() > 0:
-				spielkarte = arr.spielkarte.memoir.pop_front()
-				arr.spielkarte.archive.append(spielkarte)
-				obj.croupier.dict.out[spielkarte.num.rank].append(spielkarte.word.kind)
+			pull_full_memoir_to_archive()
 
 
-	func reset_thought() -> void:
+	func pull_full_memoir_to_archive() -> void:
+		while arr.spielkarte.memoir.size() > 0:
+			var spielkarte = arr.spielkarte.memoir.pop_front()
+			arr.spielkarte.archive.append(spielkarte)
+			obj.croupier.dict.out[spielkarte.num.rank].append(spielkarte.word.kind)
+
+
+	func pull_full_thought_to_memoir() -> void:
 		while arr.spielkarte.thought.size() > 0:
 			var spielkarte = arr.spielkarte.thought.pop_front()
 			arr.spielkarte.thought.erase(spielkarte)
 			arr.spielkarte.memoir.append(spielkarte)
 
 
-	func reset_dream() -> void:
+	func pull_full_dream_to_memoir() -> void:
 		while arr.spielkarte.dream.size() > 0:
 			var spielkarte = arr.spielkarte.dream.pop_front()
 			arr.spielkarte.dream.erase(spielkarte)
@@ -108,3 +119,18 @@ class Album:
 	func fill_thought() -> void:
 		while arr.spielkarte.thought.size() < obj.croupier.num.draw.current:
 			pull_spielkarte_from_archive()
+
+
+	func full_reset() -> void:
+		while arr.spielkarte.thought.size() > 0:
+			var spielkarte = arr.spielkarte.thought.pop_front()
+			convert_thought_into_dream(spielkarte)
+		
+		pull_full_dream_to_memoir()
+		pull_full_memoir_to_archive()
+		clear_archive_from_etiketts()
+
+
+	func clear_archive_from_etiketts() -> void:
+		for spielkarte in arr.spielkarte.archive:
+			spielkarte.clear_etiketts()

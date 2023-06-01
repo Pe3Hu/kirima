@@ -28,10 +28,14 @@ func update_color() -> void:
 
 
 func follow_phase() -> void:
-	#var time = 0.5
-	#tween = create_tween()
-	#tween.tween_property(self, "position", 0, time)
-	#tween.tween_callback(Callable(parent, func_name))
+	if parent.obj.winner == null:
+		var time = 0.05
+		tween = create_tween()
+		tween.tween_property(self, "position", 0, time)
+		tween.tween_callback(call_follow_phase)
+
+
+func call_follow_phase() -> void:
 	var phase = parent.obj.wettbewerb.arr.phase.front()
 	var words = phase.split(" ")
 	var func_name = ""
@@ -43,4 +47,5 @@ func follow_phase() -> void:
 		if _i != words.size()-1:
 			func_name += "_"
 	
+	print(func_name)
 	Callable(parent, func_name).call()

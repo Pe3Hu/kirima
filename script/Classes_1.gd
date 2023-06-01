@@ -88,8 +88,16 @@ class Croupier:
 
 
 	func reset_dream() -> void:
-		obj.album.reset_dream()
+		obj.album.pull_full_dream_to_memoir()
 		scene.myself.remove_spielkartes_from_dream()
+
+
+	func reset_after_spieltisch() -> void:
+		obj.spieler.num.score += obj.spieler.dict.match_history[obj.spieler.obj.opponent]
+		obj.spieltisch = null
+		obj.spieler.obj.opponent = null
+		obj.album.full_reset()
+		scene.myself.reset_spielkartes()
 
 
 #Игрок spieler
@@ -97,6 +105,7 @@ class Spieler:
 	var arr = {}
 	var num = {}
 	var obj = {}
+	var dict = {}
 	var scene = {}
 
 
@@ -104,12 +113,13 @@ class Spieler:
 		num.index = Global.num.index.spieler
 		Global.num.index.spieler += 1
 		num.order = -1
+		num.score = 0
 		obj.wettbewerb = input_.wettbewerb
-		obj.spieltisch = null
 		obj.kleriker = input_.kleriker
 		obj.kleriker.obj.spieler = self
 		obj.opponent = null
 		init_croupier()
+		dict.match_history = {}
 
 
 	func init_croupier() -> void:
@@ -125,5 +135,6 @@ class Spieler:
 			opponents.append_array(obj.croupier.obj.spieltisch.arr.croupier)
 			opponents.erase(obj.croupier)
 			obj.opponent = opponents.front().obj.spieler
+			dict.match_history[obj.opponent] = 0
 		else:
 			print("#error 0# Spieler -> set_opponent")

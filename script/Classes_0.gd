@@ -89,6 +89,16 @@ class Spieltisch:
 		obj.abroller.scene.myself.activate_all_etiketts()
 
 
+	func close_table() -> void:
+		print("closed")
+		for croupier in arr.croupier:
+			croupier.reset_after_spieltisch()
+		
+		scene.myself.queue_free()
+		obj.wettbewerb.arr.spieltisch.erase(self)
+		obj.wettbewerb.check_end()
+
+
 #Турнир wettbewerb
 class Wettbewerb:
 	var arr = {}
@@ -101,6 +111,8 @@ class Wettbewerb:
 
 
 	func _init(input_: Dictionary) -> void:
+		num.turn = {}
+		num.turn.current = 0
 		obj.kasino = input_.kasino
 		word.type = input_.type
 		dict.spieler = {}
@@ -113,12 +125,12 @@ class Wettbewerb:
 		set_phases_by_wettbewerb()
 		init_spielers()
 		init_standings()
-		start_round()
+		next_round()
 
 
 	func init_scene() -> void:
 		scene.myself = Global.scene.wettbewerb.instantiate()
-		#scene.myself.set_parent(self)
+		scene.myself.set_parent(self)
 		obj.kasino.scene.myself.get_node("Wettbewerb").add_child(scene.myself)
 
 
@@ -143,8 +155,9 @@ class Wettbewerb:
 	func init_standings() -> void:
 		dict.standings = {}
 		num.round = {}
-		num.round.current = 0 
+		num.round.current = 0
 		num.round.last = num.challengers - 1
+		num.turn.current = 0
 		set_order()
 		
 		for round in num.round.last:
@@ -165,10 +178,12 @@ class Wettbewerb:
 				spieler.num.order = orders.find(spieler.obj.kleriker.word.credo)
 
 
-	func start_round() -> void:
-		init_spieltischs()
-		next_phase()
-		make_spieltisch_deals()
+	func next_round() -> void:
+		if num.round.current < num.round.last:
+			init_spieltischs()
+			next_phase()
+			#make_spieltisch_deals()
+			num.round.current += 1
 
 
 	func init_spieltischs() -> void:
@@ -190,19 +205,12 @@ class Wettbewerb:
 
 
 	func make_spieltisch_deals() -> void:
-		while !flag.end:
+		while !flag.end && num.turn.current < 200:
 			next_phase()
 
 
 	func next_phase() -> void:
-		if !flag.end:
-			for spieltisch in arr.spieltisch:
-				spieltisch.scene.myself.follow_phase()
-			
-			arr.phase.pop_front()
-			
-			if arr.phase.size() == 0:
-				set_phases_by_wettbewerb()
+		scene.myself.follow_phase()
 
 
 	func set_phases_by_wettbewerb() -> void:
@@ -214,6 +222,34 @@ class Wettbewerb:
 				arr.phase.append("make deal")
 				arr.phase.append("activate all etiketts")
 				arr.phase.append("spieler queue")
+		
+		num.turn.current += 1
+
+
+	func check_end() -> void:
+#		flag.end = true
+#
+#		for spieltisch in arr.spieltisch:
+#			if spieltisch.obj.winner == null:
+#				flag.end = false
+#				break
+		flag.end = arr.spieltisch.size() == 0
+		
+		if flag.end:
+			print_score()
+			#next_round()
+
+
+	func print_score() -> void:
+		var tempels = {}
+		
+		for tempel in dict.spieler.keys():
+			tempels[tempel] = {}
+			
+			for spieler in dict.spieler[tempel]:
+				tempels[tempel][spieler.obj.kleriker.word.credo] = spieler.num.score
+		
+			print(tempels[tempel])
 
 
 #Казино kasino

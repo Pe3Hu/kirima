@@ -19,7 +19,7 @@ func _input(event) -> void:
 					Global.obj.kasino.arr.wettbewerb.front().flag.end = true
 			KEY_SPACE:
 				if event.is_pressed() && !event.is_echo():
-					Global.obj.kasino.arr.wettbewerb.front().next_phase()#make_spieltisch_deals()
+					Global.obj.kasino.arr.wettbewerb.front().next_4_phases()#make_spieltisch_deals()
 
 
 func _process(delta_) -> void:

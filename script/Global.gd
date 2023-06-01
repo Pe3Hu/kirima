@@ -39,6 +39,10 @@ func init_num() -> void:
 	num.spielkarte.rank.max = 7
 	num.spielkarte.rank.min = 1
 	num.spielkarte.rank.white_skin = num.spielkarte.rank.max * 2 + num.spielkarte.rank.min
+	
+	num.score = {}
+	num.score.win = 2
+	num.score.loss = 0
 
 
 func init_dict() -> void:

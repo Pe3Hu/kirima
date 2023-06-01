@@ -180,9 +180,16 @@ class Achteck:
 			num.aspect[aspect_].current = max(num.aspect[aspect_].current, 0)
 			
 			if aspect_ == "health" and num.aspect[aspect_].current == 0:
-				print(self, " is dead")
-				obj.mönch.obj.kleriker.obj.spieler.obj.wettbewerb.flag.end = true
-				flag.alive = false
+				score_loss()
+
+
+	func score_loss() -> void:
+		flag.alive = false
+		var spieler = obj.mönch.obj.kleriker.obj.spieler
+		spieler.obj.croupier.obj.spieltisch.obj.winner = spieler.obj.opponent
+		spieler.obj.opponent.dict.match_history[spieler] = Global.num.score.win
+		spieler.dict.match_history[spieler.obj.opponent] = Global.num.score.loss
+		spieler.obj.croupier.obj.spieltisch.close_table()
 
 
 #Монах mönch 

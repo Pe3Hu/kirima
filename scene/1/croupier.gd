@@ -43,7 +43,18 @@ func remove_spielkartes_from_dream():
 		child.recolor_bg("default")
 
 
+func remove_spielkartes_from_thought():
+	while $HBox/Spielkarte/Thought.get_child_count() > 0:
+		var child = $HBox/Spielkarte/Thought.get_children().pop_front()
+		$HBox/Spielkarte/Thought.remove_child(child)
+		child.recolor_bg("default")
+
+
 func recolor_spielkartes_bg(layer_: String) -> void:
 	for child in $HBox/Spielkarte/Dream.get_children():
 		child.recolor_bg(layer_)
 
+
+func reset_spielkartes() -> void:
+	remove_spielkartes_from_dream()
+	remove_spielkartes_from_thought()
