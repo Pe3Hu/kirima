@@ -13,8 +13,13 @@ class Spieltisch:
 		num.index = Global.num.index.spieltisch
 		Global.num.index.spieltisch += 1
 		obj.wettbewerb = input_.wettbewerb
+		obj.winner = null
 		arr.croupier = input_.croupiers
 		init_scene()
+		init_abroller()
+		
+		for croupier in arr.croupier:
+			croupier.obj.spieler.set_opponent()
 
 
 	func init_scene() -> void:
@@ -23,44 +28,65 @@ class Spieltisch:
 		obj.wettbewerb.scene.myself.get_node("Spieltisch").add_child(scene.myself)
 
 
+	func init_abroller() -> void:
+		var input = {}
+		input.spieltisch = self
+		obj.abroller = Classes_6.Abroller.new(input)
+
+
 	func make_deal() -> void:
-		var spieler = {}
-		spieler.winner = []
-		spieler.loser = []
-		spieler.tie = []
 		scene.myself.update_color()
 		
 		for croupier in arr.croupier:
 			croupier.pull_standard_spielkartes()
-			croupier.pull_additional_spielkartes()
+
+
+	func spieler_queue() -> void:
+		if obj.winner == null:
+			var spieler = {}
+			spieler.winner = []
+			spieler.loser = []
+			spieler.tie = []
 			
-			var data = {}
-			data.croupier = croupier
-			data.harmony = croupier.num.harmony
-			
-			if !croupier.flag.white_skin:
-				spieler.winner.append(data)
-			else:
-				spieler.loser.append(data)
-		
-		if spieler.winner.size() > 0:
-			if spieler.winner.size() == 2:
-				if spieler.winner.front().harmony != spieler.winner.back().harmony:
-					spieler.winner.sort_custom(func(a, b): return a.harmony > b.harmony)
-					var loser = spieler.winner.pop_back()
-					spieler.loser.append(loser)
+			for croupier in arr.croupier:
+				croupier.pull_additional_spielkartes()
+				
+				var data = {}
+				data.croupier = croupier
+				data.harmony = croupier.num.harmony
+				
+				if !croupier.flag.white_skin:
+					spieler.winner.append(data)
 				else:
-					while spieler.winner.size() > 0:
-						var data = spieler.winner.pop_front()
-						spieler.tie.append(data)
-		
-		for key in spieler.keys():
-			for data in spieler[key]:
-				data.croupier.scene.myself.recolor_spielkartes_bg(key)
-		
-		if spieler.winner.size() == 1:
-			var winner = spieler.winner.front().croupier.obj.spieler
-			winner.obj.kleriker.obj.mönch.dict.gebet.regular.calc_impact()
+					spieler.loser.append(data)
+			
+			if spieler.winner.size() > 0:
+				if spieler.winner.size() == 2:
+					if spieler.winner.front().harmony != spieler.winner.back().harmony:
+						spieler.winner.sort_custom(func(a, b): return a.harmony > b.harmony)
+						var loser = spieler.winner.pop_back()
+						spieler.loser.append(loser)
+					else:
+						while spieler.winner.size() > 0:
+							var data = spieler.winner.pop_front()
+							spieler.tie.append(data)
+			
+			for key in spieler.keys():
+				for data in spieler[key]:
+					data.croupier.scene.myself.recolor_spielkartes_bg(key)
+			
+			if spieler.winner.size() == 1:
+				var winner = spieler.winner.front().croupier.obj.spieler
+				winner.obj.kleriker.obj.mönch.dict.gebet.regular.calc_impact()
+
+
+	func clean_out_table() -> void:
+		for croupier in arr.croupier:
+			croupier.reset_dream()
+
+
+	func activate_all_etiketts() -> void:
+		obj.abroller.scene.myself.activate_all_etiketts()
 
 
 #Турнир wettbewerb
@@ -69,17 +95,20 @@ class Wettbewerb:
 	var num = {}
 	var obj = {}
 	var dict = {}
+	var word = {}
 	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		obj.kasino = input_.kasino
+		word.type = input_.type
 		dict.spieler = {}
 		
 		for tempel in input_.tempels:
 			dict.spieler[tempel] = []
 		
 		init_scene()
+		set_phases_by_wettbewerb()
 		init_spielers()
 		init_standings()
 		start_round()
@@ -136,7 +165,7 @@ class Wettbewerb:
 
 	func start_round() -> void:
 		init_spieltischs()
-		make_spieltisch_deals()
+		next_phase()
 
 
 	func init_spieltischs() -> void:
@@ -159,7 +188,31 @@ class Wettbewerb:
 
 	func make_spieltisch_deals() -> void:
 		for spieltisch in arr.spieltisch:
+			spieltisch.clean_out_table()
 			spieltisch.make_deal()
+			spieltisch.activate_all_etiketts()
+			spieltisch.spieler_queue()
+
+
+	func next_phase() -> void:
+		for spieltisch in arr.spieltisch:
+			spieltisch.scene.myself.follow_phase()
+		
+		arr.phase.pop_front()
+		
+		if arr.phase.size() == 0:
+			set_phases_by_wettbewerb()
+
+
+	func set_phases_by_wettbewerb() -> void:
+		arr.phase = []
+		
+		match word.type:
+			"standart":
+				arr.phase.append("clean out table")
+				arr.phase.append("make deal")
+				arr.phase.append("activate all etiketts")
+				arr.phase.append("spieler queue")
 
 
 #Казино kasino
@@ -172,8 +225,6 @@ class Kasino:
 	func _init() -> void:
 		init_scene()
 		arr.wettbewerb = []
-		#init_spielers()
-		#init_spieltischs()
 
 
 	func init_scene() -> void:
@@ -181,29 +232,11 @@ class Kasino:
 		Global.node.game.get_node("Layer0").add_child(scene.myself)
 
 
-	func init_spieltischs() -> void:
-		arr.spieltisch = []
-		var input = {}
-		input.kasino = self
-		input.croupiers = [arr.spieler.front().obj.croupier,arr.spieler.back().obj.croupier]
-		var spieltisch = Classes_0.Spieltisch.new(input)
-		arr.spieltisch.append(spieltisch)
-
-
 	func add_wettbewerb(tempels_: Array) -> void:
 		var input = {}
 		input.kasino = self
+		input.type = "standart"
 		input.tempels = tempels_
 		var wettbewerb = Classes_0.Wettbewerb.new(input)
 		arr.wettbewerb.append(wettbewerb)
 
-
-	func init_spielers() -> void:
-		arr.spieler = []
-		var n = 0
-		
-		for _i in n:
-			var input = {}
-			input.kasino = self
-			var spieler = Classes_1.Spieler.new(input)
-			arr.spieler.append(spieler)

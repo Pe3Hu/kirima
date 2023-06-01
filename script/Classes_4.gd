@@ -15,15 +15,20 @@ class Kleriker:
 		Global.num.index.kleriker += 1
 		obj.tempel = input_.tempel
 		word.credo = input_.credo
-		#init_credo()
+		init_anzeige()
 		init_mönch()
-		#init_scene()
 
 
 	func init_scene() -> void:
 		scene.myself = Global.scene.kleriker.instantiate()
 		scene.myself.set_parent(self)
 		obj.tempel.scene.myself.get_node("Kleriker").add_child(scene.myself)
+
+
+	func init_anzeige() -> void:
+		var input = {}
+		input.kleriker = self
+		obj.anzeige = Classes_4.Anzeige.new(input)
 
 
 	func init_credo() -> void:
@@ -36,11 +41,18 @@ class Kleriker:
 		obj.mönch = Classes_5.Mönch.new(input)
 
 
-#Кредо credo
-class Credo:
-	var word = {}
+#Показатель anzeige
+class Anzeige:
+	var obj = {}
+	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
-		word.title = input_.title
+		obj.kleriker = input_.kleriker
+		init_scene()
+
+
+	func init_scene() -> void:
+		scene.myself = Global.scene.anzeige.instantiate()
+		scene.myself.set_parent(self)
 

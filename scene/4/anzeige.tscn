@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://cebhqubog6re0"]
+
+[ext_resource type="Script" path="res://scene/4/anzeige.gd" id="1_4iiui"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iegh6"]
+bg_color = Color(0.75, 0.6, 0.6, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5idhm"]
+bg_color = Color(1, 0.1, 0.1, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfgek"]
+bg_color = Color(0.6, 0.7125, 0.75, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wep8"]
+bg_color = Color(0.101961, 0.776471, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywkqy"]
+bg_color = Color(0.74902, 0.701961, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjaac"]
+bg_color = Color(1, 0.7, 0.1, 1)
+
+[node name="Anzeige" type="MarginContainer"]
+custom_minimum_size = Vector2(40, 40)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+script = ExtResource("1_4iiui")
+
+[node name="Bar" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Health" type="ProgressBar" parent="Bar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_iegh6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5idhm")
+max_value = 200.0
+value = 60.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Mana" type="ProgressBar" parent="Bar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_sfgek")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0wep8")
+max_value = 200.0
+value = 60.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Rage" type="ProgressBar" parent="Bar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_ywkqy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mjaac")
+max_value = 200.0
+value = 60.0
+fill_mode = 3
+show_percentage = false

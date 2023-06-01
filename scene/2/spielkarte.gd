@@ -12,7 +12,7 @@ func set_parent(parent_) -> void:
 
 
 func update_rec_size() -> void:
-	custom_minimum_size = Vector2(Global.vec.size.spielkarte)
+	custom_minimum_size = Vector2(Global.vec.size.node.spielkarte)
 
 
 func update_labes() -> void:
@@ -30,3 +30,14 @@ func recolor_bg(layer_: String) -> void:
 			$BG.color = Color.WHITE
 		"tie":
 			$BG.color = Color.LIGHT_GRAY
+
+
+func give_away_etiketts() -> void:
+	recolor_bg("default")
+	
+	if parent.arr.etikett.size() > 0:
+		print(parent.arr.etikett.size())
+		
+		while parent.arr.etikett.size() > 0:
+			var etikett = parent.arr.etikett.pop_front()
+			etikett.scene.myself.add_to_abroller()

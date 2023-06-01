@@ -29,17 +29,11 @@ class Tempel:
 
 	func _init(input_: Dictionary) -> void:
 		obj.glaube = input_.glaube
-		#init_scene()
 		init_kardinal()
 		init_klerikers()
 		set_basic_scherbes()
 		suit_up_basic_scherbes()
 		obj.kardinal.set_challengers()
-
-
-	func init_scene() -> void:
-		scene.myself = Global.scene.tempel.instantiate()
-		obj.glaube.scene.myself.get_node("Kleriker").add_child(scene.myself)
 
 
 	func init_kardinal() -> void:
@@ -106,5 +100,3 @@ class Glaube:
 			input.glaube = self
 			var tempel = Classes_3.Tempel.new(input)
 			arr.tempel.append(tempel)
-
- 

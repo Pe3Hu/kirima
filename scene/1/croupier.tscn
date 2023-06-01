@@ -10,21 +10,31 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_h01xw")
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Spielkarte" type="VBoxContainer" parent="."]
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Spielkarte" type="VBoxContainer" parent="HBox"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Dream" type="HBoxContainer" parent="Spielkarte"]
+[node name="Dream" type="HBoxContainer" parent="HBox/Spielkarte"]
 layout_mode = 2
+theme_override_constants/separation = 6
 alignment = 1
 
-[node name="Thought" type="HBoxContainer" parent="Spielkarte"]
+[node name="Thought" type="HBoxContainer" parent="HBox/Spielkarte"]
 layout_mode = 2
+theme_override_constants/separation = 6
 alignment = 1

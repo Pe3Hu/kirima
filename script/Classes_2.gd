@@ -3,6 +3,7 @@ extends Node
 
 #Игральная карта spielkarte
 class Spielkarte:
+	var arr = {}
 	var obj = {}
 	var num = {}
 	var word = {}
@@ -13,6 +14,7 @@ class Spielkarte:
 		obj.spieler = input_.spieler
 		word.kind = input_.kind
 		num.rank = input_.rank
+		arr.etikett = []
 		init_scene()
 
 

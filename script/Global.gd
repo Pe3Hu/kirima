@@ -297,8 +297,14 @@ func init_window_size():
 	vec.size.window.height = ProjectSettings.get_setting("display/window/size/viewport_height")
 	vec.size.window.center = Vector2(vec.size.window.width/2, vec.size.window.height/2)
 	
-	#font size 28
-	vec.size.spielkarte = Vector2(40, 50)
+	vec.size.node = {}
+	vec.size.node.spielkarte = Vector2(40, 50)
+	vec.size.node.etikett = Vector2(15, 15)
+	
+	num.size = {}
+	num.size.font = {}
+	num.size.font.spielkarte = 28
+	num.size.font.etikett = 14
 
 
 func init_scene() -> void:
@@ -308,6 +314,9 @@ func init_scene() -> void:
 	scene.spieler = load("res://scene/1/spieler.tscn")
 	scene.croupier = load("res://scene/1/croupier.tscn")
 	scene.spielkarte = load("res://scene/2/spielkarte.tscn")
+	scene.anzeige = load("res://scene/4/anzeige.tscn")
+	scene.abroller = load("res://scene/6/abroller.tscn")
+	scene.etikett = load("res://scene/6/etikett.tscn")
 
 
 func _ready() -> void:

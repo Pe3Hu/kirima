@@ -106,6 +106,7 @@ class Achteck:
 			num.aspect[aspect].secondary = 0
 			num.aspect[aspect].multiplier = 0
 			num.aspect[aspect].result = 0
+			num.aspect[aspect].current = 0
 
 
 	func init_scherbe_slots() -> void:
@@ -167,6 +168,7 @@ class Achteck:
 			stat.result = max(Global.num.stat.min.rage, stat.result)
 		
 		stat.result = ceil(stat.result)
+		stat.current = stat.result
 
 
 #Монах mönch 
@@ -214,10 +216,26 @@ class Mönch:
 		dict.gebet.regular = Classes_6.Gebet.new(input)
 
 
-	func get_bookmark(scatter_: int) -> int:
-		var bookmark = -1
-		var album = obj.kleriker.obj.spieler.obj.croupier.obj.album
+	func get_bookmark(description_: Dictionary) -> Variant:
+		var bookmark = null
+		var archive = obj.kleriker.obj.spieler.obj.opponent.obj.croupier.obj.album.arr.spielkarte.archive
+		var anchor = null
+		var scatter = min(archive.size(), description_.scatter)
 		
-		#print(album.arr.spielkarte.archive.size())
+		match description_.location:
+			"top":
+				anchor = 0
+			"middle":
+				anchor = ceil((archive.size() - scatter) * 0.5)
+			"bottom":
+				anchor = archive.size() - scatter
+		
+		Global.rng.randomize()
+		bookmark = anchor + Global.rng.randi_range(0, scatter - 1)
+		
+		if archive.size() <= bookmark:
+			bookmark = null
+			print("#error 1# Mönch -> get_bookmark")
+		
 		return bookmark
 

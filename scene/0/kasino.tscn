@@ -19,6 +19,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 2
+color = Color(0.584314, 0.584314, 0.584314, 1)
 
 [node name="Wettbewerb" type="HBoxContainer" parent="."]
 layout_mode = 2
