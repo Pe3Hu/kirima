@@ -25,8 +25,14 @@ class Etikett:
 
 	func activate() -> void:
 		var description = Global.dict.etikett.title[word.title]
-		print(description)
+		var changes = -num.counter
+		var kleriker = obj.spielkarte.obj.album.obj.croupier.obj.spieler.obj.kleriker
+		var achteck = kleriker.obj.mönch.obj.achteck
+		var aspect = "health"
+		achteck.change_aspect(aspect, changes)
+		kleriker.obj.anzeige.scene.myself.update_bar_value(aspect, "current")
 		scene.myself.queue_free()
+
 
 #Молитва gebet
 class Gebet:

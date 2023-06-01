@@ -57,6 +57,6 @@ func set_labels() -> void:
 
 
 func add_to_abroller() -> void:
-	var abroller = parent.obj.spielkarte.obj.spieler.obj.croupier.obj.spieltisch.obj.abroller
+	var abroller = parent.obj.spielkarte.obj.album.obj.croupier.obj.spieltisch.obj.abroller
 	abroller.scene.myself.get_node("Etikett").add_child(self)
 	abroller.scene.myself.set_grid_cols()

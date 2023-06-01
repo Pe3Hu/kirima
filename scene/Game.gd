@@ -14,6 +14,9 @@ func _ready() -> void:
 func _input(event) -> void:
 	if event is InputEventKey:
 		match event.keycode:
+			KEY_A:
+				if event.is_pressed() && !event.is_echo():
+					Global.obj.kasino.arr.wettbewerb.front().flag.end = true
 			KEY_SPACE:
 				if event.is_pressed() && !event.is_echo():
 					Global.obj.kasino.arr.wettbewerb.front().next_phase()#make_spieltisch_deals()

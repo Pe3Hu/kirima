@@ -47,6 +47,17 @@ class Croupier:
 		update_harmony()
 
 
+	func update_harmony():
+		num.harmony = 0
+		
+		for spielkarte in obj.album.arr.spielkarte.dream:
+			num.harmony += spielkarte.num.rank
+		
+		if num.harmony > Global.num.spielkarte.rank.white_skin:
+			flag.skip = true
+			flag.white_skin = true
+
+
 	func pull_additional_spielkartes():
 		while !flag.skip:
 			var outcomes = calc_chance_of_losing()
@@ -60,17 +71,6 @@ class Croupier:
 					update_harmony()
 				"bad":
 					flag.skip = true
-
-
-	func update_harmony():
-		num.harmony = 0
-		
-		for spielkarte in obj.album.arr.spielkarte.dream:
-			num.harmony += spielkarte.num.rank
-		
-		if num.harmony > Global.num.spielkarte.rank.white_skin:
-			flag.skip = true
-			flag.white_skin = true
 
 
 	func calc_chance_of_losing() -> Dictionary:

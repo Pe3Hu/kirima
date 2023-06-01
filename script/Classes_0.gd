@@ -95,6 +95,7 @@ class Wettbewerb:
 	var num = {}
 	var obj = {}
 	var dict = {}
+	var flag = {}
 	var word = {}
 	var scene = {}
 
@@ -103,6 +104,7 @@ class Wettbewerb:
 		obj.kasino = input_.kasino
 		word.type = input_.type
 		dict.spieler = {}
+		flag.end = false
 		
 		for tempel in input_.tempels:
 			dict.spieler[tempel] = []
@@ -166,6 +168,7 @@ class Wettbewerb:
 	func start_round() -> void:
 		init_spieltischs()
 		next_phase()
+		make_spieltisch_deals()
 
 
 	func init_spieltischs() -> void:
@@ -187,21 +190,19 @@ class Wettbewerb:
 
 
 	func make_spieltisch_deals() -> void:
-		for spieltisch in arr.spieltisch:
-			spieltisch.clean_out_table()
-			spieltisch.make_deal()
-			spieltisch.activate_all_etiketts()
-			spieltisch.spieler_queue()
+		while !flag.end:
+			next_phase()
 
 
 	func next_phase() -> void:
-		for spieltisch in arr.spieltisch:
-			spieltisch.scene.myself.follow_phase()
-		
-		arr.phase.pop_front()
-		
-		if arr.phase.size() == 0:
-			set_phases_by_wettbewerb()
+		if !flag.end:
+			for spieltisch in arr.spieltisch:
+				spieltisch.scene.myself.follow_phase()
+			
+			arr.phase.pop_front()
+			
+			if arr.phase.size() == 0:
+				set_phases_by_wettbewerb()
 
 
 	func set_phases_by_wettbewerb() -> void:

@@ -11,7 +11,7 @@ class Spielkarte:
 
 
 	func _init(input_: Dictionary) -> void:
-		obj.spieler = input_.spieler
+		obj.album = input_.album
 		word.kind = input_.kind
 		num.rank = input_.rank
 		arr.etikett = []
@@ -27,12 +27,10 @@ class Spielkarte:
 class Album:
 	var obj = {}
 	var arr = {}
-	var dict = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		obj.croupier = input_.croupier
-		dict.ethnography = {}
 		init_spielkartes()
 
 
@@ -66,7 +64,7 @@ class Album:
 				
 				obj.croupier.dict.out[rank].append(kind)
 				var input = {}
-				input.spieler = self
+				input.album = self
 				input.kind = kind
 				input.rank = rank
 				var spielkarte = Classes_2.Spielkarte.new(input)
@@ -74,17 +72,17 @@ class Album:
 
 
 	func pull_spielkarte_from_archive() -> void:
-		if arr.spielkarte.archive.size() == 0:
-			while arr.spielkarte.memoir.size() > 0:
-				var spielkarte = arr.spielkarte.pop_front()
-				arr.spielkarte.archive.append(spielkarte)
-				obj.croupier.dict.out[spielkarte.num.rank].append(spielkarte.word.kind)
-		
 		arr.spielkarte.archive.shuffle()
 		var spielkarte = arr.spielkarte.archive.pop_front()
 		arr.spielkarte.thought.append(spielkarte)
 		obj.croupier.scene.myself.add_spielkarte_into_thought(spielkarte)
 		obj.croupier.dict.out[spielkarte.num.rank].erase(spielkarte.word.kind)
+		
+		if arr.spielkarte.archive.size() == 0:
+			while arr.spielkarte.memoir.size() > 0:
+				spielkarte = arr.spielkarte.memoir.pop_front()
+				arr.spielkarte.archive.append(spielkarte)
+				obj.croupier.dict.out[spielkarte.num.rank].append(spielkarte.word.kind)
 
 
 	func reset_thought() -> void:

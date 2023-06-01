@@ -35,9 +35,6 @@ func recolor_bg(layer_: String) -> void:
 func give_away_etiketts() -> void:
 	recolor_bg("default")
 	
-	if parent.arr.etikett.size() > 0:
-		print(parent.arr.etikett.size())
-		
-		while parent.arr.etikett.size() > 0:
-			var etikett = parent.arr.etikett.pop_front()
-			etikett.scene.myself.add_to_abroller()
+	while parent.arr.etikett.size() > 0:
+		var etikett = parent.arr.etikett.pop_front()
+		etikett.scene.myself.add_to_abroller()

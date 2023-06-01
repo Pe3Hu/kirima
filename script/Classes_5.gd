@@ -86,12 +86,14 @@ class Achteck:
 	var arr = {}
 	var obj = {}
 	var num = {}
+	var flag = {}
 	var dict = {}
 	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:
 		obj.mönch = input_.mönch
+		flag.alive = true
 		init_aspect()
 		init_scherbe_slots()
 
@@ -169,6 +171,18 @@ class Achteck:
 		
 		stat.result = ceil(stat.result)
 		stat.current = stat.result
+
+
+	func change_aspect(aspect_: String, changes_: int) -> void:
+		if flag.alive:
+			num.aspect[aspect_].current += changes_
+			num.aspect[aspect_].current = min(num.aspect[aspect_].current, num.aspect[aspect_].result)
+			num.aspect[aspect_].current = max(num.aspect[aspect_].current, 0)
+			
+			if aspect_ == "health" and num.aspect[aspect_].current == 0:
+				print(self, " is dead")
+				obj.mönch.obj.kleriker.obj.spieler.obj.wettbewerb.flag.end = true
+				flag.alive = false
 
 
 #Монах mönch 
