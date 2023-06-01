@@ -12,9 +12,9 @@ func set_parent(parent_) -> void:
 
 
 func set_spielers() -> void:
-		for croupier in parent.arr.croupier:
-			croupier.obj.spieltisch = parent
-			$VBox.add_child(croupier.scene.myself)
+	for croupier in parent.arr.croupier:
+		croupier.obj.spieltisch = parent
+		$VBox.add_child(croupier.scene.myself)
 
 
 func update_color() -> void:
@@ -49,3 +49,17 @@ func call_follow_phase() -> void:
 	
 	print(func_name)
 	Callable(parent, func_name).call()
+
+
+func claer_after_close() -> void:
+	var node = $VBox
+	
+	while node.get_child_count() > 0:
+		var child = node.get_children().pop_front()
+		node.remove_child(child)
+	
+	parent.obj.abroller.scene.myself.queue_free()
+	parent.obj.abroller.obj.spieltisch = null
+	parent.obj.wettbewerb.arr.spieltisch.erase(parent)
+	parent.obj.wettbewerb.check_end()
+	queue_free()

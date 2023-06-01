@@ -24,13 +24,17 @@ class Etikett:
 
 
 	func activate() -> void:
-		var description = Global.dict.etikett.title[word.title]
-		var changes = -num.counter
-		var kleriker = obj.spielkarte.obj.album.obj.croupier.obj.spieler.obj.kleriker
-		var achteck = kleriker.obj.mönch.obj.achteck
-		var aspect = "health"
-		achteck.change_aspect(aspect, changes)
-		kleriker.obj.anzeige.scene.myself.update_bar_value(aspect, "current")
+		var croupier = obj.spielkarte.obj.album.obj.croupier
+		
+		if croupier.obj.spieltisch != null:
+			var description = Global.dict.etikett.title[word.title]
+			var changes = -num.counter
+			var kleriker = croupier.obj.spieler.obj.kleriker
+			var achteck = kleriker.obj.mönch.obj.achteck
+			var aspect = "health"
+			achteck.change_aspect(aspect, changes)
+			kleriker.obj.anzeige.scene.myself.update_bar_value(aspect, "current")
+		
 		scene.myself.queue_free()
 
 
@@ -64,7 +68,7 @@ class Gebet:
 		var input = {}
 		input.gebet = self
 		input.title = word.etikett
-		input.counter = ceil(pow(value, 1.0/description.degree))
+		input.counter = ceil(pow(value, 1.0/description.degree))*10
 		var bookmark = obj.mönch.get_bookmark(description)
 		var archive = obj.mönch.obj.kleriker.obj.spieler.obj.opponent.obj.croupier.obj.album.arr.spielkarte.archive
 		input.spielkarte = archive[bookmark]

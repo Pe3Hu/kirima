@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 	var tempels = []
 	tempels.append_array(Global.obj.glaube.arr.tempel)
-	Global.obj.kasino.add_wettbewerb(tempels)
+	#Global.obj.kasino.add_wettbewerb(tempels)
 
 
 func _input(event) -> void:
@@ -16,10 +16,10 @@ func _input(event) -> void:
 		match event.keycode:
 			KEY_A:
 				if event.is_pressed() && !event.is_echo():
-					Global.obj.kasino.arr.wettbewerb.front().flag.end = true
+					Global.obj.kasino.arr.wettbewerb.front().next_phase()
 			KEY_SPACE:
 				if event.is_pressed() && !event.is_echo():
-					Global.obj.kasino.arr.wettbewerb.front().next_4_phases()#make_spieltisch_deals()
+					Global.obj.kasino.arr.wettbewerb.front().pause()#make_spieltisch_deals()
 
 
 func _process(delta_) -> void:

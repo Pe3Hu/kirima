@@ -9,11 +9,17 @@ func set_parent(parent_) -> void:
 	parent = parent_
 
 
+func remove_all_spieltisch():
+	while $Spieltisch.get_child_count() > 0:
+		var child = $Spieltisch.get_children().pop_front()
+		$Spieltisch.remove_child(child)
+
+
 func follow_phase() -> void:
-	if !parent.flag.end:
+	if !parent.flag.end && !parent.flag.pause:
 		var time = 0.05
 		tween = create_tween()
-		tween.tween_property(self, "position", 0, time)
+		tween.tween_property(self, "position", Vector2(), time)
 		tween.tween_callback(call_follow_phase)
 
 
@@ -35,4 +41,5 @@ func call_follow_phase() -> void:
 	if parent.arr.phase.size() == 0:
 		parent.set_phases_by_wettbewerb()
 	
-	follow_phase()
+	if !parent.flag.pause:
+		follow_phase()

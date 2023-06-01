@@ -27,7 +27,7 @@ class Spielkarte:
 		while arr.etikett.size() > 0:
 			var etikett = arr.etikett.pop_front()
 			etikett.obj.spielkarte = null
-			scene.myself.queue_free()
+			etikett.scene.myself.queue_free()
 
 
 #Альбом album

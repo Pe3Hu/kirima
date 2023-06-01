@@ -151,6 +151,8 @@ class Achteck:
 		
 		for aspect in Global.arr.main:
 			formula_stat(aspect)
+		
+		reset_main_aspects()
 
 
 	func formula_stat(aspect_: String) -> void:
@@ -170,11 +172,15 @@ class Achteck:
 			stat.result = max(Global.num.stat.min.rage, stat.result)
 		
 		stat.result = ceil(stat.result)
-		stat.current = stat.result
+
+
+	func reset_main_aspects():
+		for aspect in num.aspect.keys():
+			num.aspect[aspect].current = num.aspect[aspect].result
 
 
 	func change_aspect(aspect_: String, changes_: int) -> void:
-		if flag.alive:
+		if flag.alive :
 			num.aspect[aspect_].current += changes_
 			num.aspect[aspect_].current = min(num.aspect[aspect_].current, num.aspect[aspect_].result)
 			num.aspect[aspect_].current = max(num.aspect[aspect_].current, 0)
@@ -186,6 +192,7 @@ class Achteck:
 	func score_loss() -> void:
 		flag.alive = false
 		var spieler = obj.mönch.obj.kleriker.obj.spieler
+		var a = spieler.obj.croupier.obj
 		spieler.obj.croupier.obj.spieltisch.obj.winner = spieler.obj.opponent
 		spieler.obj.opponent.dict.match_history[spieler] = Global.num.score.win
 		spieler.dict.match_history[spieler.obj.opponent] = Global.num.score.loss

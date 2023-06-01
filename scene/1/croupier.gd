@@ -36,17 +36,12 @@ func convert_thought_into_dream(spielkarte_):
 		$HBox/Spielkarte.set("theme_override_constants/separation", Global.num.separation.spielkarte)
 
 
-func remove_spielkartes_from_dream():
-	while $HBox/Spielkarte/Dream.get_child_count() > 0:
-		var child = $HBox/Spielkarte/Dream.get_children().pop_front()
-		$HBox/Spielkarte/Dream.remove_child(child)
-		child.recolor_bg("default")
-
-
-func remove_spielkartes_from_thought():
-	while $HBox/Spielkarte/Thought.get_child_count() > 0:
-		var child = $HBox/Spielkarte/Thought.get_children().pop_front()
-		$HBox/Spielkarte/Thought.remove_child(child)
+func remove_spielkartes_from(hbox_: String):
+	var node = $HBox/Spielkarte.get_node(hbox_.capitalize())
+	
+	while node.get_child_count() > 0:
+		var child = node.get_children().pop_front()
+		node.remove_child(child)
 		child.recolor_bg("default")
 
 
@@ -56,5 +51,5 @@ func recolor_spielkartes_bg(layer_: String) -> void:
 
 
 func reset_spielkartes() -> void:
-	remove_spielkartes_from_dream()
-	remove_spielkartes_from_thought()
+	remove_spielkartes_from("dream")
+	remove_spielkartes_from("thought")

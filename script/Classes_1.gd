@@ -89,7 +89,7 @@ class Croupier:
 
 	func reset_dream() -> void:
 		obj.album.pull_full_dream_to_memoir()
-		scene.myself.remove_spielkartes_from_dream()
+		scene.myself.remove_spielkartes_from("dream")
 
 
 	func reset_after_spieltisch() -> void:
@@ -97,7 +97,10 @@ class Croupier:
 		obj.spieltisch = null
 		obj.spieler.obj.opponent = null
 		obj.album.full_reset()
+		obj.spieler.obj.kleriker.obj.mönch.obj.achteck.reset_main_aspects()
+		obj.spieler.obj.kleriker.obj.anzeige.scene.myself.reset_aspects()
 		scene.myself.reset_spielkartes()
+		
 
 
 #Игрок spieler
@@ -106,7 +109,6 @@ class Spieler:
 	var num = {}
 	var obj = {}
 	var dict = {}
-	var scene = {}
 
 
 	func _init(input_: Dictionary) -> void:

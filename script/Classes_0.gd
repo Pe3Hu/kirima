@@ -86,17 +86,15 @@ class Spieltisch:
 
 
 	func activate_all_etiketts() -> void:
-		obj.abroller.scene.myself.activate_all_etiketts()
+		if obj.winner == null:
+			obj.abroller.scene.myself.activate_all_etiketts()
 
 
 	func close_table() -> void:
-		print("closed")
 		for croupier in arr.croupier:
 			croupier.reset_after_spieltisch()
 		
-		scene.myself.queue_free()
-		obj.wettbewerb.arr.spieltisch.erase(self)
-		obj.wettbewerb.check_end()
+		scene.myself.claer_after_close()
 
 
 #Турнир wettbewerb
@@ -117,6 +115,7 @@ class Wettbewerb:
 		word.type = input_.type
 		dict.spieler = {}
 		flag.end = false
+		flag.pause = false
 		
 		for tempel in input_.tempels:
 			dict.spieler[tempel] = []
@@ -180,6 +179,8 @@ class Wettbewerb:
 
 	func next_round() -> void:
 		if num.round.current < num.round.last:
+			flag.end = false
+			print("round ", num.round.current)
 			init_spieltischs()
 			next_phase()
 			#make_spieltisch_deals()
@@ -188,6 +189,11 @@ class Wettbewerb:
 
 	func init_spieltischs() -> void:
 		arr.spieltisch = []
+		scene.myself.remove_all_spieltisch()
+		
+#		for tempel in dict.spieler.keys():
+#			for spieler in dict.spieler[tempel]:
+#				print(spieler.obj.croupier.scene.myself)
 		
 		for pair in dict.standings[num.round.current]:
 			var input = {}
@@ -210,7 +216,7 @@ class Wettbewerb:
 
 
 	func next_phase() -> void:
-		scene.myself.follow_phase()
+		scene.myself.call_follow_phase()
 
 
 	func set_phases_by_wettbewerb() -> void:
@@ -224,20 +230,15 @@ class Wettbewerb:
 				arr.phase.append("spieler queue")
 		
 		num.turn.current += 1
+		print_hp()
 
 
 	func check_end() -> void:
-#		flag.end = true
-#
-#		for spieltisch in arr.spieltisch:
-#			if spieltisch.obj.winner == null:
-#				flag.end = false
-#				break
 		flag.end = arr.spieltisch.size() == 0
 		
 		if flag.end:
 			print_score()
-			#next_round()
+			next_round()
 
 
 	func print_score() -> void:
@@ -250,6 +251,26 @@ class Wettbewerb:
 				tempels[tempel][spieler.obj.kleriker.word.credo] = spieler.num.score
 		
 			print(tempels[tempel])
+
+
+	func print_hp() -> void:
+		var tempels = {}
+		
+		for tempel in dict.spieler.keys():
+			tempels[tempel] = {}
+			
+			for spieler in dict.spieler[tempel]:
+				var hp = spieler.obj.kleriker.obj.anzeige.scene.myself.get_hp()
+				
+				if hp > 0:
+					tempels[tempel][spieler.num.index] = hp
+		
+		print(tempels)
+
+
+	func pause() -> void:
+		flag.pause = !flag.pause
+		scene.myself.follow_phase()
 
 
 #Казино kasino
