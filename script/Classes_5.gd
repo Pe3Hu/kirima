@@ -145,7 +145,7 @@ class Achteck:
 							num.aspect[aspect].multiplier += value * 0.01 * sign
 
 
-	func update_stats() -> void:
+	func update_aspects() -> void:
 		for aspect in Global.arr.auxiliary:
 			formula_stat(aspect)
 		
@@ -175,16 +175,21 @@ class Achteck:
 
 
 	func reset_main_aspects():
+		flag.alive = true
+		
 		for aspect in num.aspect.keys():
 			num.aspect[aspect].current = num.aspect[aspect].result
 
 
 	func change_aspect(aspect_: String, changes_: int) -> void:
-		if flag.alive :
+		if flag.alive:
 			num.aspect[aspect_].current += changes_
 			num.aspect[aspect_].current = min(num.aspect[aspect_].current, num.aspect[aspect_].result)
 			num.aspect[aspect_].current = max(num.aspect[aspect_].current, 0)
+			#print(obj.mönch.obj.kleriker.obj.spieler.num.index, " > ", num.aspect[aspect_].current)
 			
+			#Global.num.index.etikett += 1
+			#print(Global.num.index.etikett, " > ", num.aspect[aspect_].current)
 			if aspect_ == "health" and num.aspect[aspect_].current == 0:
 				score_loss()
 
@@ -222,12 +227,39 @@ class Mönch:
 
 
 	func choose_best_outfit() -> void:
+		var priority = Global.dict.credo.title[obj.kleriker.word.credo]
+		var aspects = []
+		aspects.append(priority.main)
+		aspects.append(priority.auxiliary)
+		
 		for wind_rose in obj.achteck.dict.scherbe.keys():
-			var options = obj.kleriker.obj.tempel.dict.scherbe[wind_rose]
-			var scherbe = options.front()
+			var datas = []
+			
+			for scherbe in obj.kleriker.obj.tempel.dict.scherbe[wind_rose]:
+				if scherbe.obj.achteck == null:
+					var data = {}
+					data.scherbe = scherbe
+					data.weight = 0
+					
+					for aspect in scherbe.dict.stat.keys():
+						if aspects.has(aspect):
+							for type in scherbe.dict.stat[aspect].keys(): 
+								for category in scherbe.dict.stat[aspect][type].keys(): 
+									data.weight += Global.num.weight.scherbe[type][category]
+					
+					datas.append(data)
+			
+			datas.sort_custom(func(a, b): return a.weight > b.weight)
+			var options = []
+			
+			for data in datas:
+				if data.weight == datas.front().weight:
+					options.append(data.scherbe)
+			
+			var scherbe = Global.get_random_element(options)
 			obj.achteck.suit_up_scherbe(scherbe)
 		
-		obj.achteck.update_stats()
+		obj.achteck.update_aspects()
 
 
 	func set_regular_gebet() -> void:
@@ -235,8 +267,9 @@ class Mönch:
 		
 		for title in Global.dict.gebet.title.keys():
 			var gebet = Global.dict.gebet.title[title]
+			var credo = Global.dict.credo.title[obj.kleriker.word.credo]
 			
-			if gebet.creed == obj.kleriker.word.credo and gebet.type == "regular":
+			if gebet.creed == credo.architype and gebet.type == "regular":
 				options.append(gebet)
 		
 		var input = Global.get_random_element(options)

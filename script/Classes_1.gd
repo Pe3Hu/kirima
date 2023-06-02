@@ -87,9 +87,9 @@ class Croupier:
 		return outcomes
 
 
-	func reset_dream() -> void:
-		obj.album.pull_full_dream_to_memoir()
-		scene.myself.remove_spielkartes_from("dream")
+	func reset_section(section_: String) -> void:
+		obj.album.pull_full_section(section_)
+		scene.myself.remove_spielkartes_from(section_)
 
 
 	func reset_after_spieltisch() -> void:
@@ -100,7 +100,6 @@ class Croupier:
 		obj.spieler.obj.kleriker.obj.mönch.obj.achteck.reset_main_aspects()
 		obj.spieler.obj.kleriker.obj.anzeige.scene.myself.reset_aspects()
 		scene.myself.reset_spielkartes()
-		
 
 
 #Игрок spieler
@@ -138,5 +137,8 @@ class Spieler:
 			opponents.erase(obj.croupier)
 			obj.opponent = opponents.front().obj.spieler
 			dict.match_history[obj.opponent] = 0
+			
+			#if num.index < 8:
+			#	print(num.index, " <> ", obj.opponent.num.index-8)
 		else:
 			print("#error 0# Spieler -> set_opponent")

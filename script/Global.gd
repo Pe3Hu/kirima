@@ -17,6 +17,7 @@ func init_num() -> void:
 	num.index.spieltisch = 0
 	num.index.spieler = 0
 	num.index.kleriker = 0
+	num.index.etikett = 0
 	
 	num.stat = {}
 	num.stat.min = {}
@@ -43,6 +44,15 @@ func init_num() -> void:
 	num.score = {}
 	num.score.win = 2
 	num.score.loss = 0
+	
+	num.weight = {}
+	num.weight.scherbe = {}
+	num.weight.scherbe.bonus = {}
+	num.weight.scherbe.bonus.primary = 8
+	num.weight.scherbe.bonus.secondary = 1
+	num.weight.scherbe.multiplier = {}
+	num.weight.scherbe.multiplier.primary = 6
+	num.weight.scherbe.multiplier.secondary = 4
 
 
 func init_dict() -> void:
@@ -90,11 +100,32 @@ func init_dict() -> void:
 		]
 	]
 	
+	init_credo()
 	init_octagon()
 	init_gebet()
 	init_scherbe()
 	init_etikett()
 	init_base_stat()
+
+
+func init_credo() -> void:
+	dict.credo = {}
+	dict.credo.title = {}
+	dict.credo.architype = {}
+	var path = "res://asset/json/credo_data.json"
+	var array = load_data(path)
+	
+	for credo in array:
+		var data = {}
+
+		for key in credo.keys():
+			if key != "Title":
+				data[key.to_lower()] = credo[key].to_lower()
+			
+			if key == "Architype" and !dict.credo.architype.keys().has(credo[key].to_lower()):
+				dict.credo.architype[credo[key].to_lower()] = []
+		
+		dict.credo.title[credo["Title"].to_lower()] = data
 
 
 func init_octagon() -> void:
@@ -157,7 +188,6 @@ func init_octagon() -> void:
 
 func init_gebet() -> void:
 	dict.gebet = {}
-	dict.credo = {}
 	dict.gebet.title = {}
 	var path = "res://asset/json/gebet_data.json"
 	var array = load_data(path)
@@ -171,9 +201,6 @@ func init_gebet() -> void:
 				
 			if typeof(gebet[key]) == TYPE_STRING:
 				data[key.to_lower()] = gebet[key].to_lower()
-			
-			if key == "Creed" and !dict.credo.keys().has(gebet[key].to_lower()):
-				dict.credo[gebet[key].to_lower()] = []
 		
 		dict.gebet.title[gebet["Title"].to_lower()] = data
 

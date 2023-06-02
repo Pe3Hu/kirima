@@ -82,7 +82,7 @@ class Spieltisch:
 
 	func clean_out_table() -> void:
 		for croupier in arr.croupier:
-			croupier.reset_dream()
+			croupier.reset_section("dream")
 
 
 	func activate_all_etiketts() -> void:
@@ -190,11 +190,6 @@ class Wettbewerb:
 	func init_spieltischs() -> void:
 		arr.spieltisch = []
 		scene.myself.remove_all_spieltisch()
-		
-#		for tempel in dict.spieler.keys():
-#			for spieler in dict.spieler[tempel]:
-#				print(spieler.obj.croupier.scene.myself)
-		
 		for pair in dict.standings[num.round.current]:
 			var input = {}
 			input.wettbewerb = self
@@ -230,18 +225,18 @@ class Wettbewerb:
 				arr.phase.append("spieler queue")
 		
 		num.turn.current += 1
-		print_hp()
+		show_hp()
 
 
 	func check_end() -> void:
 		flag.end = arr.spieltisch.size() == 0
 		
 		if flag.end:
-			print_score()
+			show_score()
 			next_round()
 
 
-	func print_score() -> void:
+	func show_score() -> void:
 		var tempels = {}
 		
 		for tempel in dict.spieler.keys():
@@ -253,17 +248,32 @@ class Wettbewerb:
 			print(tempels[tempel])
 
 
-	func print_hp() -> void:
+	func show_hp() -> void:
 		var tempels = {}
 		
 		for tempel in dict.spieler.keys():
 			tempels[tempel] = {}
 			
 			for spieler in dict.spieler[tempel]:
-				var hp = spieler.obj.kleriker.obj.anzeige.scene.myself.get_hp()
-				
-				if hp > 0:
-					tempels[tempel][spieler.num.index] = hp
+				if spieler.obj.croupier.obj.spieltisch != null:
+					var hp = spieler.obj.kleriker.obj.anzeige.scene.myself.get_hp()
+					
+					if hp > 0:
+						tempels[tempel][spieler.num.index] = hp
+
+
+	func show_etikett() -> void:
+		var tempels = {}
+		
+		for tempel in dict.spieler.keys():
+			tempels[tempel] = {}
+			
+			for spieler in dict.spieler[tempel]:
+				if spieler.obj.croupier.obj.spieltisch != null:
+					var hp = spieler.obj.kleriker.obj.anzeige.scene.myself.get_etikett()
+					
+					if hp > 0:
+						tempels[tempel][spieler.num.index] = hp
 		
 		print(tempels)
 

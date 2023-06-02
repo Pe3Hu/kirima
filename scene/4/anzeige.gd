@@ -52,7 +52,6 @@ func reset_aspects() -> void:
 		for path in paths:
 			update_bar_value(aspect, path)
 			var hp = get_hp()
-			print(hp)
 
 
 func get_hp() -> int:

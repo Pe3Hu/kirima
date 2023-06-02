@@ -14,7 +14,7 @@ class Etikett:
 		num.counter = input_.counter
 		obj.gebet = input_.gebet
 		obj.spielkarte = input_.spielkarte
-		obj.spielkarte.arr.etikett.append(self)
+		obj.spielkarte.obj.album.num.etikett += 1
 		init_scene()
 
 
@@ -72,7 +72,8 @@ class Gebet:
 		var bookmark = obj.mönch.get_bookmark(description)
 		var archive = obj.mönch.obj.kleriker.obj.spieler.obj.opponent.obj.croupier.obj.album.arr.spielkarte.archive
 		input.spielkarte = archive[bookmark]
-		obj.etikett = Classes_6.Etikett.new(input)
+		var etikett = Classes_6.Etikett.new(input)
+		input.spielkarte.arr.etikett.append(etikett)
 
 
 #Дозатор abroller

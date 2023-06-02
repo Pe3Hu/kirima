@@ -4,11 +4,12 @@ extends Node
 func _ready() -> void:
 	Global.obj.glaube = Classes_3.Glaube.new()
 	Global.obj.kasino = Classes_0.Kasino.new()
-	#datas.sort_custom(func(a, b): return a.value < b.value) 012
+	#datas.sort_custom(func(a, b): return a.value < b.value) 
+	#012
 	
 	var tempels = []
 	tempels.append_array(Global.obj.glaube.arr.tempel)
-	#Global.obj.kasino.add_wettbewerb(tempels)
+	Global.obj.kasino.add_wettbewerb(tempels)
 
 
 func _input(event) -> void:

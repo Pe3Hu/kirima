@@ -46,7 +46,7 @@ class Tempel:
 		arr.kleriker = []
 		var n = 1
 		
-		for credo in Global.dict.credo.keys():
+		for credo in Global.dict.credo.title.keys():
 			var input = {}
 			input.tempel = self
 			input.credo = credo
@@ -70,8 +70,22 @@ class Tempel:
 
 
 	func suit_up_basic_scherbes() -> void:
-		for kleriker in arr.kleriker:
+		var klerikers = []
+		klerikers.append_array(arr.kleriker)
+		klerikers.shuffle()
+		
+		while klerikers.size() > 0:
+			var kleriker = klerikers.pop_front()
 			kleriker.obj.mönch.choose_best_outfit()
+
+
+	func get_free_scherbes() -> void:
+		for wind_rose in dict.scherbe:
+			var free_scherbes = []
+			
+			for scherbe in dict.scherbe[wind_rose]:
+				if scherbe.obj.achteck == null:
+					free_scherbes.append(scherbe)
 
 
 #Вера glaube

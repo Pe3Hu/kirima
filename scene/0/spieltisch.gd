@@ -47,7 +47,6 @@ func call_follow_phase() -> void:
 		if _i != words.size()-1:
 			func_name += "_"
 	
-	print(func_name)
 	Callable(parent, func_name).call()
 
 

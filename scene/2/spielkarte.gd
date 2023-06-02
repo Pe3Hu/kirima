@@ -38,3 +38,4 @@ func give_away_etiketts() -> void:
 	while parent.arr.etikett.size() > 0:
 		var etikett = parent.arr.etikett.pop_front()
 		etikett.scene.myself.add_to_abroller()
+		parent.obj.album.num.etikett -= 1
